@@ -22,7 +22,6 @@ function AppInput({
       className={`
         flex
         flex-col
-        gap-2
         ${containerClassName}
       `}
     >
@@ -44,21 +43,9 @@ function AppInput({
           ) : null
         }
         className={`
-          !h-8
-          !rounded-md
-          !border
-          !shadow-none
-          !transition-all
-          !duration-200
+          form-input
           ${className}
         `}
-        style={{
-          color:
-            dashboardTheme.colors
-              .textHeader,
-
-          borderColor: dashboardTheme.colors.textHeader,
-        }}
       />
     </div>
   )

@@ -4,7 +4,8 @@ export const dashboardTheme = {
     primaryHover: '#3b82f6',
 
     header: '#ffffff',
-    textHeader: '#000000',
+    
+    textContent: '#000000',
 
     sidebar: '#121928',
     borderSidebar: 'rgba(255,255,255,0.10)',

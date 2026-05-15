@@ -34,17 +34,16 @@ function SideBar() {
       <div
         className={`
           flex
-          h-14
+          h-18
           items-center
           border-b
           px-5
           transition-all
           duration-300
 
-          ${
-            collapsed
-              ? 'justify-center'
-              : 'justify-between'
+          ${collapsed
+            ? 'justify-center'
+            : 'justify-between'
           }
         `}
         style={{
@@ -101,7 +100,7 @@ function SideBar() {
               !w-10
               !items-center
               !justify-center
-              !rounded-lg
+              form-rounded
             "
             style={{
               borderColor: dashboardTheme.colors.borderSidebar,
@@ -136,7 +135,7 @@ function SideBar() {
               !w-10
               !items-center
               !justify-center
-              !rounded-xl
+              form-rounded
             "
             style={{
               borderColor: dashboardTheme.colors.borderSidebar,
@@ -176,7 +175,6 @@ function SideBar() {
             dashboard-sidebar-menu
             border-none
             !bg-transparent
-            [&_.ant-menu-item]:!rounded-lg
           "
         />
       </div>

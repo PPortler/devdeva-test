@@ -11,7 +11,9 @@ function DashboardHeader() {
   return (
     <header
       className="
-        h-14
+        h-18
+        flex 
+        items-center
       "
       style={{
         backgroundColor: dashboardTheme.colors.header,

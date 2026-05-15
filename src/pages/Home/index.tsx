@@ -1,4 +1,4 @@
-import { homeItems } from "@/constants/home-items"
+import { homeItems } from "@/constants/home/home-items"
 import BackgroundHome from "@/components/Home/BackgroundHome/BackgroundHome"
 import HomeCard from "@/components/Home/HomeCard/HomeCard"
 import HeroSection from "@/components/Home/HeroSection/HeroSection"

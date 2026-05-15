@@ -2,7 +2,7 @@ import {
   ChartSpline,
   LayoutDashboard,
 } from 'lucide-react'
-import type { HomeItem } from '../types/home/HomeItem'
+import type { HomeItem } from '../../types/home/HomeItem'
 
 export const homeItems: HomeItem[] = [
   {
