@@ -45,7 +45,5 @@ export const theme = {
     doneTag: "#c4efd4",
     doneTagText: "#003d00",
 
-    // Avatar
-    defaultAvatarColor: "#6b6e82",
   },
 }

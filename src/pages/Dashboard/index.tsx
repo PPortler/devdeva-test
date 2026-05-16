@@ -9,6 +9,7 @@ import type { TaskPriority } from "@/types/task/TaskPriority"
 import AppPagination from "@/components/UI/AppPagination/AppPagination"
 import useDebounce from "@/hooks/useDebounce"
 import useDashboardStore from "@/stores/dashboard/useDashboardStore"
+import TaskModal from "@/components/Dashboard/Task/TaskModal/TaskModal"
 
 function DashboardPage() {
   // state
@@ -19,6 +20,7 @@ function DashboardPage() {
   const [status, setStatus] = useState<TaskStatus>()
   const [priority, setPriority] = useState<TaskPriority>()
   const [search, setSearch] = useState('')
+  const [openTaskModal, setOpenTaskModal] = useState(false)
 
   // store
   const { searchHeader } = useDashboardStore()
@@ -55,7 +57,13 @@ function DashboardPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl">Dashboard</h1>
-        <AppButton icon={<Plus size={18} />} disabled={isLoadingInitialData}>
+        <AppButton
+          icon={<Plus size={18} />}
+          disabled={isLoadingInitialData}
+          onClick={() =>
+            setOpenTaskModal(true)
+          }
+        >
           Create Task
         </AppButton>
       </div>
@@ -91,6 +99,14 @@ function DashboardPage() {
           onChange={(newPage) => setPage(newPage)}
         />
       </div>
+
+      {/* Task Modal */}
+      <TaskModal
+        open={openTaskModal}
+        onClose={() =>
+          setOpenTaskModal(false)
+        }
+      />
     </div>
   )
 }
