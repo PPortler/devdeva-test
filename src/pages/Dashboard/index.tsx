@@ -6,10 +6,11 @@ import { useState } from "react"
 import { useLoadInitialData } from "./hooks/useLoadInitialData"
 import type { TaskStatus } from "@/types/task/TaskStatus"
 import type { TaskPriority } from "@/types/task/TaskPriority"
+import AppPagination from "@/components/UI/AppPagination/AppPagination"
 
 function DashboardPage() {
   const [page, setPage] = useState(1)
-  const [limit] = useState(10)
+  const [limit] = useState(6)
   const [search, setSearch] = useState('')
   const [totalPage, setTotalPage] = useState(0)
   const [totalCount, setTotalCount] = useState(0)
@@ -65,9 +66,17 @@ function DashboardPage() {
         )}
       </div>
 
-      {/* Pagination Info */}
-      <div className="mt-5 text-sm text-gray-500">
-        Showing {tasks.length} of {totalCount} tasks (Page {page}/{totalPage})
+      {/* Pagination */}
+      <div className="mt-5">
+        <AppPagination
+          totalPage={totalPage}
+          tasksLength={tasks.length}
+          totalCount={totalCount}
+          current={page}
+          total={totalCount}
+          pageSize={limit}
+          onChange={(newPage) => setPage(newPage)}
+        />
       </div>
     </div>
   )

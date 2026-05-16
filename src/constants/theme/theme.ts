@@ -4,7 +4,7 @@ export const theme = {
   colors: {
     // General
     primary: '#1f69d7',
-    textPrimary: '#FFFFFF',
+    textPrimary: '#ffffff',
     primaryHover: '#3b82f6',
 
     header: '#ffffff',

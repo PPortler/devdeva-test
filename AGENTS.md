@@ -106,14 +106,24 @@ export default ComponentName
 - ✅ **Ant Design** สำหรับ complex components
 - ✅ **Theme constants** จาก `src/constants/theme/theme.ts`
 - ❌ ไม่ใช้ inline styles มากเกินไป
+- ❌ **ห้าม hardcode colors** - ใช้ theme constants แทน
 
 Example:
 ```tsx
 // ✅ Good
-<div className="flex gap-4 rounded-lg bg-white">
+import { theme } from '@/constants/theme/theme'
+
+<div style={{ color: theme.colors.textPrimary }}>
+  Content
+</div>
 
 // ❌ Avoid
-<div style={{ display: 'flex', gap: '16px' }}>
+<div style={{ 
+  display: 'flex', 
+  gap: '16px',
+  color: '#1f69d7',  // Hardcode color
+  backgroundColor: '#ffffff'  // Hardcode color
+}}>
 ```
 
 ### Logic Organization
@@ -176,6 +186,7 @@ npm run build             # Build success
 - ❌ **ห้ามลบไฟล์สำคัญ** โดยไม่แจ้งก่อน (tsconfig, vite.config, package.json)
 - ❌ **ห้าม modify types** ที่มีความสำคัญ โดยไม่คิดถึง impact
 - ❌ **ห้าม hardcode values** ใช้ constants/config แทน
+- ❌ **ห้าม hardcode colors** ใช้ theme constants จาก `src/constants/theme/theme.ts` แทน
 - ⚠️ ถ้าไม่แน่ใจ ให้ถาม หรือ propose plan ก่อนทำการแก้ไข
 - ✅ **ทำการบันทึก progress** ก่อนทำการ major changes
 
