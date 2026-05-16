@@ -5,6 +5,7 @@ import type { TaskPriority } from '@/types/task/TaskPriority'
 
 // TODO: delete when connecting to real API
 import { useMockData } from './useMockData'
+import type { User } from '@/types/user/User'
 
 type Params = {
     page: number
@@ -30,10 +31,24 @@ export const useLoadInitialData = ({
 
     const [isLoadingInitialData, setIsLoadingInitialData] = useState(false)
     const [tasks, setTasks] = useState<Task[]>([])
+    const [users, setUsers] = useState<User[]>([])
 
     // TODO: deleted when connecting to real API
-    const { getTasksData } = useMockData()
+    const { getTasksData, getUsersData } = useMockData()
 
+    // Call User For Options
+    const callUserList = async () => {
+        setUsers([])
+        // TODO: replace with real API call
+        const response = await getUsersData()
+
+        if (!response.ok) return false
+
+        setUsers(response.data.users)
+        return true
+    };
+
+    // Call Tasks
     const callTasks = async () => {
         setTasks([])
         // TODO: replace with real API call
@@ -57,7 +72,7 @@ export const useLoadInitialData = ({
     const loadInitialData = async (): Promise<void> => {
         setIsLoadingInitialData(true);
 
-        const promises = [callTasks()];
+        const promises = [callTasks(), callUserList()];
         const results = await Promise.all(promises);
 
         setIsLoadingInitialData(false);
@@ -65,6 +80,19 @@ export const useLoadInitialData = ({
         if (results.some((result) => !result)) {
             // TODO: เพิ่ม alert error
             console.error('Error loading initial data');
+        }
+    };
+
+    // ไว้สำหรับ reload data หลังจาก create/edit task เสร็จ
+    const reloadTasks = async (): Promise<void> => {
+        setIsLoadingInitialData(true);
+
+        const results = await callTasks();
+        setIsLoadingInitialData(false);
+
+        if (!results) {
+            // TODO: เพิ่ม alert error
+            console.error('Error reloading tasks');
         }
     };
 
@@ -76,5 +104,7 @@ export const useLoadInitialData = ({
     return {
         isLoadingInitialData,
         tasks,
+        users,
+        reloadTasks
     }
 }

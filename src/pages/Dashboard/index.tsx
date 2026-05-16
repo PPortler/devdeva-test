@@ -34,7 +34,7 @@ function DashboardPage() {
   })
 
   // load initial data
-  const { isLoadingInitialData, tasks } = useLoadInitialData({
+  const { isLoadingInitialData, tasks, users } = useLoadInitialData({
     page,
     limit,
     searchHeader: debouncedHeaderSearch,
@@ -106,6 +106,12 @@ function DashboardPage() {
         onClose={() =>
           setOpenTaskModal(false)
         }
+        assignees={users}
+        onSubmit={(data) => {
+          // TODO: เรียก API สำหรับสร้าง task
+          console.log('Submit task:', data)
+          setOpenTaskModal(false)
+        }}
       />
     </div>
   )

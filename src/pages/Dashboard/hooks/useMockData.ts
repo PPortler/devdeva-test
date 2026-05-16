@@ -2,7 +2,9 @@
 import type { Task } from '@/types/task/Task'
 import { TASK_STATUS, TASK_STATUS_LABEL } from '@/types/task/TaskStatus'
 import { TASK_PRIORITY, TASK_PRIORITY_LABEL } from '@/types/task/TaskPriority'
+import type { User } from '@/types/user/User'
 
+// Mock Tasks Data
 const MOCK_TASKS: Task[] = [
   {
     id: '1',
@@ -201,7 +203,47 @@ const MOCK_TASKS: Task[] = [
   },
 ]
 
+// User List Mock Data
+const MOCK_USERS = [
+  {
+    id: '1',
+    name: 'Alice Johnson',
+    email: 'alice@example.com',
+    avatar:
+      'https://i.pravatar.cc/150?img=1',
+  },
+  {
+    id: '2',
+    name: 'Bob Smith',
+    email: 'bob@example.com',
+    avatar:
+      'https://i.pravatar.cc/150?img=2',
+  },
+  {
+    id: '3',
+    name: 'Carol White',
+    email: 'carol@example.com',
+    avatar:
+      'https://i.pravatar.cc/150?img=3',
+  },
+  {
+    id: '4',
+    name: 'David Brown',
+    email: 'david@example.com',
+    avatar:
+      'https://i.pravatar.cc/150?img=4',
+  },
+  {
+    id: '5',
+    name: 'Eve Davis',
+    email: 'eve@example.com',
+    avatar:
+      'https://i.pravatar.cc/150?img=5',
+  },
+]
+
 // API Response Types ถ้ามี api จริง type พวกนี้ผมจะย้ายไปไว้อยู่กับพวก service ครับ
+// Task API
 type GetTasksResponse = {
   ok: boolean
   data: {
@@ -223,6 +265,15 @@ type GetTasksParams = {
   searchHeader?: string
   status?: string
   priority?: string
+}
+
+// User List API
+type GetUsersResponse = {
+  ok: boolean
+  data: {
+    users: User[]
+  }
+  message?: string
 }
 
 export const useMockData = () => {
@@ -297,7 +348,18 @@ export const useMockData = () => {
     }
   }
 
+  const getUsersData = async (): Promise<GetUsersResponse> => {
+    return {
+      ok: true,
+      data: {
+        users: MOCK_USERS,
+      },
+      message: 'Success',
+    }
+  }
+
   return {
     getTasksData,
+    getUsersData,
   }
 }
