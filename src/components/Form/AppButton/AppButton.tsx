@@ -9,6 +9,7 @@ type AppButtonProps = {
   fullWidth?: boolean
   backgroundColor?: string
   textColor?: string
+  disabled?: boolean
 } & ButtonProps
 
 function AppButton({
@@ -19,6 +20,7 @@ function AppButton({
   textColor,
   className = '',
   children,
+  disabled,
   ...props
 }: AppButtonProps) {
   return (
@@ -29,11 +31,13 @@ function AppButton({
         form-button
         ${fullWidth ? '!w-full' : ''}
         ${className}
+        ${disabled ? 'cursor-not-allowed opacity-50' : 'hover:opacity-95'}
       `}
       style={{
         background: backgroundColor || theme.colors.primary,
         color: textColor || theme.colors.textPrimary,
       }}
+      disabled={disabled}
       {...props}
     >
       {loading ? '' : icon}

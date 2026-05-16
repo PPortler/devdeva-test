@@ -39,7 +39,7 @@ function DashboardPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-2xl">Dashboard</h1>
-        <AppButton icon={<Plus size={18} />}>
+        <AppButton icon={<Plus size={18} />} disabled={isLoadingInitialData}>
           Create Task
         </AppButton>
       </div>
@@ -59,11 +59,7 @@ function DashboardPage() {
 
       {/* Task List */}
       <div className="mt-5">
-        {isLoadingInitialData ? (
-          <div className="text-center py-8">Loading tasks...</div>
-        ) : (
-          <TaskList tasks={tasks} />
-        )}
+          <TaskList tasks={tasks} isLoading={isLoadingInitialData} />
       </div>
 
       {/* Pagination */}
