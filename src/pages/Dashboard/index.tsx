@@ -7,20 +7,25 @@ import { useLoadInitialData } from "./hooks/useLoadInitialData"
 import type { TaskStatus } from "@/types/task/TaskStatus"
 import type { TaskPriority } from "@/types/task/TaskPriority"
 import AppPagination from "@/components/UI/AppPagination/AppPagination"
+import useDebounce from "@/hooks/useDebounce"
 
 function DashboardPage() {
   const [page, setPage] = useState(1)
   const [limit] = useState(6)
-  const [search, setSearch] = useState('')
   const [totalPage, setTotalPage] = useState(0)
   const [totalCount, setTotalCount] = useState(0)
   const [status, setStatus] = useState<TaskStatus>()
   const [priority, setPriority] = useState<TaskPriority>()
+  const [search, setSearch] = useState('')
+
+  const debouncedSearch = useDebounce({
+    value: search,
+  })
 
   const { isLoadingInitialData, tasks } = useLoadInitialData({
     page,
     limit,
-    search,
+    search: debouncedSearch,
     status,
     priority,
     setTotalPage,
@@ -59,7 +64,7 @@ function DashboardPage() {
 
       {/* Task List */}
       <div className="mt-5">
-          <TaskList tasks={tasks} isLoading={isLoadingInitialData} />
+        <TaskList tasks={tasks} isLoading={isLoadingInitialData} />
       </div>
 
       {/* Pagination */}
