@@ -3,27 +3,34 @@ import TaskList from "@/components/Dashboard/Task/TaskList"
 import AppButton from "@/components/Form/AppButton/AppButton"
 import { Plus } from "lucide-react"
 import { useState } from "react"
-import type { Task } from "@/types/task/Task"
-import { TASK_STATUS } from "@/types/task/TaskStatus"
-
-const MOCK_TASKS: Task[] = [
-  { id: '1', title: 'Design homepage', status: TASK_STATUS.TODO },
-  { id: '2', title: 'Setup database', status: TASK_STATUS.TODO },
-  { id: '3', title: 'Build authentication', status: TASK_STATUS.DOING },
-  { id: '4', title: 'API integration', status: TASK_STATUS.DOING },
-  { id: '5', title: 'Deploy to production', status: TASK_STATUS.DONE },
-  { id: '6', title: 'User testing', status: TASK_STATUS.DONE },
-]
+import { useLoadInitialData } from "./hooks/useLoadInitialData"
+import type { TaskStatus } from "@/types/task/TaskStatus"
+import type { TaskPriority } from "@/types/task/TaskPriority"
 
 function DashboardPage() {
+  const [page, setPage] = useState(1)
+  const [limit] = useState(10)
   const [search, setSearch] = useState('')
-  const [status1, setStatus1] = useState<string | undefined>()
-  const [status2, setStatus2] = useState<string | undefined>()
+  const [totalPage, setTotalPage] = useState(0)
+  const [totalCount, setTotalCount] = useState(0)
+  const [status, setStatus] = useState<TaskStatus>()
+  const [priority, setPriority] = useState<TaskPriority>()
+
+  const { isLoadingInitialData, tasks } = useLoadInitialData({
+    page,
+    limit,
+    search,
+    status,
+    priority,
+    setTotalPage,
+    setTotalCount,
+  })
 
   const handleClear = () => {
     setSearch('')
-    setStatus1(undefined)
-    setStatus2(undefined)
+    setStatus(undefined)
+    setPriority(undefined)
+    setPage(1)
   }
 
   return (
@@ -42,16 +49,25 @@ function DashboardPage() {
           search={search}
           onSearchChange={setSearch}
           onClear={handleClear}
-          selectedStatus1={status1}
-          onStatusChange1={setStatus1}
-          selectedStatus2={status2}
-          onStatusChange2={setStatus2}
+          selectedStatus={status}
+          onStatusChange={setStatus}
+          selectedPriority={priority}
+          onPriorityChange={setPriority}
         />
       </div>
 
       {/* Task List */}
       <div className="mt-5">
-        <TaskList tasks={MOCK_TASKS} />
+        {isLoadingInitialData ? (
+          <div className="text-center py-8">Loading tasks...</div>
+        ) : (
+          <TaskList tasks={tasks} />
+        )}
+      </div>
+
+      {/* Pagination Info */}
+      <div className="mt-5 text-sm text-gray-500">
+        Showing {tasks.length} of {totalCount} tasks (Page {page}/{totalPage})
       </div>
     </div>
   )

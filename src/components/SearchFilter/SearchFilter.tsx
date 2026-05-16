@@ -5,25 +5,27 @@ import { theme } from '@/constants/theme/theme'
 import AppButton from '@/components/Form/AppButton/AppButton'
 import { PRIORITY_OPTIONS } from '@/constants/options/priority-options'
 import { STATUS_OPTIONS } from '@/constants/options/status-options'
+import type { TaskStatus } from '@/types/task/TaskStatus'
+import type { TaskPriority } from '@/types/task/TaskPriority'
 
 type SearchFilterProps = {
   search: string
   onSearchChange: (value: string) => void
   onClear: () => void
-  selectedStatus1?: string
-  onStatusChange1?: (value: string) => void
-  selectedStatus2?: string
-  onStatusChange2?: (value: string) => void
+  selectedStatus?: TaskStatus
+  onStatusChange?: (value: TaskStatus) => void
+  selectedPriority?: TaskPriority
+  onPriorityChange?: (value: TaskPriority) => void
 }
 
 function SearchFilter({
   search,
   onSearchChange,
   onClear,
-  selectedStatus1,
-  onStatusChange1,
-  selectedStatus2,
-  onStatusChange2,
+  selectedStatus,
+  onStatusChange,
+  selectedPriority,
+  onPriorityChange,
 }: SearchFilterProps) {
   return (
     <div className="flex gap-2 items-end flex-wrap">
@@ -38,16 +40,16 @@ function SearchFilter({
         placeholder="All Priorities"
         icon={undefined}
         options={[...PRIORITY_OPTIONS]}
-        value={selectedStatus1}
-        onChange={onStatusChange1}
+        value={selectedPriority}
+        onChange={onPriorityChange}
         containerClassName="max-w-56 flex-1"
       />
       <AppSelect
         placeholder="Select Status"
         icon={undefined}
         options={[...STATUS_OPTIONS]}
-        value={selectedStatus2}
-        onChange={onStatusChange2}
+        value={selectedStatus}
+        onChange={onStatusChange}
         containerClassName="max-w-56 flex-1"
       />
 

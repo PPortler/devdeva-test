@@ -24,7 +24,10 @@ function TaskListSection({ status, tasks }: TaskListSectionProps) {
       {/* Tasks */}
       <div className="space-y-2 p-2">
         {filteredTasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
+          <TaskCard
+            key={task.id}
+            task={task}
+          />
         ))}
       </div>
     </div>

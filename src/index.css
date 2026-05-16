@@ -4,7 +4,6 @@
   :root {
     --form-height: 40px;
     --form-radius: 7px;
-    --form-border: #000000;
   }
 }
 
@@ -20,19 +19,19 @@
   .form-input {
     height: var(--form-height);
     border-radius: var(--form-radius) !important;
-    border: 1px solid var(--form-border) !important;
+    border: 1px solid !important;
     @apply shadow-none transition-all duration-200;
   }
 
   .form-button {
     height: var(--form-height) !important;
-    border: 1px solid var(--form-border) !important;
+    border: 1px solid !important;
     border-radius: var(--form-radius) !important;
   }
 
   .form-select {
     height: var(--form-height);
     border-radius: var(--form-radius) !important;
-    border: 1px solid var(--form-border) !important;
+    border: 1px solid !important;
   }
 }
