@@ -1,25 +1,18 @@
-import type { ReactNode } from 'react'
-
 import { Layout } from 'antd'
 
-import DashboardHeader from '../Header/Header'
-import SideBar from '../Sidebar/Sidebar'
-import { dashboardTheme } from '@/constants/dashboard/dashboard-theme'
+import Header from './Header'
+import SideBar from './Sidebar'
+import { theme } from '@/constants/theme/theme'
+import { Outlet } from 'react-router-dom'
 
 const { Content } = Layout
 
-interface DashboardLayoutProps {
-  children: ReactNode
-}
-
-function DashboardLayout({
-  children,
-}: DashboardLayoutProps) {
+function DashboardLayout() {
   return (
     <Layout
       className="min-h-screen"
       style={{
-        backgroundColor: dashboardTheme.colors.background,
+        backgroundColor: theme.colors.background,
       }}
     >
       {/* SIDEBAR */}
@@ -28,16 +21,16 @@ function DashboardLayout({
       {/* MAIN */}
       <Layout
         style={{
-          backgroundColor: dashboardTheme.colors.background,
+          backgroundColor: theme.colors.background,
         }}
       >
         {/* HEADER */}
-        <DashboardHeader />
+        <Header />
 
         {/* CONTENT */}
         <Content
           style={{
-            backgroundColor: dashboardTheme.colors.background,
+            backgroundColor: theme.colors.background,
           }}
         >
           <div
@@ -47,7 +40,7 @@ function DashboardLayout({
               min-h-[calc(100vh-128px)]
             "
           >
-            {children}
+            <Outlet/>
           </div>
         </Content>
       </Layout>

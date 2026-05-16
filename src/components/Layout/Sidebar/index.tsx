@@ -4,14 +4,17 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import { Button, Layout, Menu } from 'antd'
+import { useNavigate, useLocation } from 'react-router-dom'
 import devdevaLogo from '@/assets/images/devdeva_logo.png'
-import { dashboardMenuItems } from '@/constants/dashboard/dashboard-menu'
-import { dashboardTheme } from '@/constants/dashboard/dashboard-theme'
+import { dashboardMenuItems } from '@/constants/task-dashboard/dashboard-menu'
+import { theme } from '@/constants/theme/theme'
 
 const { Sider } = Layout
 
 function SideBar() {
   const [collapsed, setCollapsed] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   return (
     <Sider
@@ -22,8 +25,8 @@ function SideBar() {
       collapsedWidth={90}
       style={{
         background:
-          dashboardTheme.colors.sidebar,
-        borderColor: dashboardTheme.colors.borderSidebar,
+          theme.colors.sidebar,
+        borderColor: theme.colors.borderSidebar,
       }}
       className="
         min-h-screen
@@ -47,7 +50,7 @@ function SideBar() {
           }
         `}
         style={{
-          borderBottomColor: dashboardTheme.colors.borderSidebar,
+          borderBottomColor: theme.colors.borderSidebar,
         }}
       >
         {/* LOGO */}
@@ -74,7 +77,7 @@ function SideBar() {
 
           {!collapsed && (
             <div>
-              <h1 className="text-lg font-bold" style={{ color: dashboardTheme.colors.textPrimary }}>
+              <h1 className="text-lg font-bold" style={{ color: theme.colors.textPrimary }}>
                 TaskFlow
               </h1>
             </div>
@@ -91,7 +94,7 @@ function SideBar() {
             icon={
               <ChevronLeft
                 size={18}
-                color={dashboardTheme.colors.textPrimary}
+                color={theme.colors.textPrimary}
               />
             }
             className="
@@ -103,10 +106,10 @@ function SideBar() {
               form-rounded
             "
             style={{
-              borderColor: dashboardTheme.colors.borderSidebar,
+              borderColor: theme.colors.borderSidebar,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = dashboardTheme.colors.borderSidebar
+              e.currentTarget.style.backgroundColor = theme.colors.borderSidebar
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent'
@@ -126,7 +129,7 @@ function SideBar() {
             icon={
               <ChevronRight
                 size={18}
-                color={dashboardTheme.colors.textPrimary}
+                color={theme.colors.textPrimary}
               />
             }
             className="
@@ -138,10 +141,10 @@ function SideBar() {
               form-rounded
             "
             style={{
-              borderColor: dashboardTheme.colors.borderSidebar,
+              borderColor: theme.colors.borderSidebar,
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = dashboardTheme.colors.borderSidebar
+              e.currentTarget.style.backgroundColor = theme.colors.borderSidebar
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent'
@@ -154,22 +157,23 @@ function SideBar() {
       <div className="px-3 py-4">
         <style>{`
           .dashboard-sidebar-menu .ant-menu-item {
-            color: ${dashboardTheme.colors.textSecondary} !important;
+            color: ${theme.colors.textSecondary} !important;
           }
           .dashboard-sidebar-menu .ant-menu-item-selected {
-            background-color: ${dashboardTheme.colors.primary} !important;
-            color: ${dashboardTheme.colors.textPrimary} !important;
+            background-color: ${theme.colors.primary} !important;
+            color: ${theme.colors.textPrimary} !important;
           }
           .dashboard-sidebar-menu .ant-menu-item:hover {
-            background-color: ${dashboardTheme.colors.primaryHover} !important;
-            color: ${dashboardTheme.colors.textPrimary} !important;
+            background-color: ${theme.colors.primaryHover} !important;
+            color: ${theme.colors.textPrimary} !important;
           }
         `}</style>
         <Menu
           mode="inline"
           theme="dark"
           inlineCollapsed={collapsed}
-          selectedKeys={['/dashboard']}
+          selectedKeys={[location.pathname]}
+          onClick={(item) => navigate(item.key)}
           items={dashboardMenuItems}
           className="
             dashboard-sidebar-menu

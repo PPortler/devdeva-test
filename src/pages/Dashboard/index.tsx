@@ -1,4 +1,3 @@
-import DashboardLayout from "@/components/Dashboard/Layout/Layout"
 import SearchFilter from "@/components/SearchFilter/SearchFilter"
 import TaskList from "@/components/Dashboard/Task/TaskList"
 import AppButton from "@/components/Form/AppButton/AppButton"
@@ -28,35 +27,33 @@ function DashboardPage() {
   }
 
   return (
-    <DashboardLayout>
-      <div className="text-2xl font-bold">
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl">Dashboard</h1>
-          <AppButton icon={<Plus size={18} />}>
-            Create Task
-          </AppButton>
-        </div>
-
-        {/* Search Filter */}
-        <div className="mt-5">
-          <SearchFilter
-            search={search}
-            onSearchChange={setSearch}
-            onClear={handleClear}
-            selectedStatus1={status1}
-            onStatusChange1={setStatus1}
-            selectedStatus2={status2}
-            onStatusChange2={setStatus2}
-          />
-        </div>
-
-        {/* Task List */}
-        <div className="mt-5">
-          <TaskList tasks={MOCK_TASKS} />
-        </div>
+    <div className="text-2xl font-bold">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl">Dashboard</h1>
+        <AppButton icon={<Plus size={18} />}>
+          Create Task
+        </AppButton>
       </div>
-    </DashboardLayout>
+
+      {/* Search Filter */}
+      <div className="mt-5">
+        <SearchFilter
+          search={search}
+          onSearchChange={setSearch}
+          onClear={handleClear}
+          selectedStatus1={status1}
+          onStatusChange1={setStatus1}
+          selectedStatus2={status2}
+          onStatusChange2={setStatus2}
+        />
+      </div>
+
+      {/* Task List */}
+      <div className="mt-5">
+        <TaskList tasks={MOCK_TASKS} />
+      </div>
+    </div>
   )
 }
 

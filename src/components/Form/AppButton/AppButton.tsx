@@ -1,7 +1,7 @@
 import type { ButtonProps } from 'antd'
 import { Button } from 'antd'
 import type { ReactNode } from 'react'
-import { dashboardTheme } from '@/constants/dashboard/dashboard-theme'
+import { theme } from '@/constants/theme/theme'
 
 type AppButtonProps = {
   icon?: ReactNode
@@ -31,8 +31,8 @@ function AppButton({
         ${className}
       `}
       style={{
-        background: backgroundColor || dashboardTheme.colors.primary,
-        color: textColor || dashboardTheme.colors.textPrimary,
+        background: backgroundColor || theme.colors.primary,
+        color: textColor || theme.colors.textPrimary,
       }}
       {...props}
     >

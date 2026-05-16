@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import AppInput from '@/components/Form/AppInput/AppInput'
-import { dashboardTheme } from '@/constants/dashboard/dashboard-theme'
+import { theme } from '@/constants/theme/theme'
 import { Search } from 'lucide-react'
 import NotificationButton from '@/components/UI/NotificationButton/NotificationButton'
 import ProfileDropdown from '@/components/UI/ProfileDropdown/ProfileDropdown'
 
-function DashboardHeader() {
+function Header() {
   const [search, setSearch] = useState('')
 
   return (
@@ -16,9 +16,9 @@ function DashboardHeader() {
         items-center
       "
       style={{
-        backgroundColor: dashboardTheme.colors.header,
-        borderBottomColor: dashboardTheme.colors.borderSidebar,
-        color: dashboardTheme.colors.textHeader,
+        backgroundColor: theme.colors.header,
+        borderBottomColor: theme.colors.borderSidebar,
+        color: theme.colors.textContent,
       }}
     >
       {/* CONTAINER */}
@@ -51,4 +51,4 @@ function DashboardHeader() {
   )
 }
 
-export default DashboardHeader
+export default Header

@@ -1,4 +1,5 @@
-export const dashboardTheme = {
+// ใช้สำหรับ task dashboard
+export const theme = {
   colors: {
     primary: '#1f69d7',
     primaryHover: '#3b82f6',

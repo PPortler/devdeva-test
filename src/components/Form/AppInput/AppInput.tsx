@@ -1,7 +1,7 @@
 import type { InputProps } from 'antd'
 import { Input } from 'antd'
 import type { LucideIcon } from 'lucide-react'
-import { dashboardTheme } from '@/constants/dashboard/dashboard-theme'
+import { theme } from '@/constants/theme/theme'
 
 type AppInputProps = {
   icon?: LucideIcon
@@ -36,7 +36,7 @@ function AppInput({
               size={18}
               style={{
                 color:
-                  dashboardTheme.colors
+                  theme.colors
                     .textSecondary,
               }}
             />

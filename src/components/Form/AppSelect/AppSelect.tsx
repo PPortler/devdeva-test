@@ -1,7 +1,7 @@
 import { Select } from 'antd'
 import type { SelectProps } from 'antd'
 import type { ReactNode } from 'react'
-import { dashboardTheme } from '@/constants/dashboard/dashboard-theme'
+import { theme } from '@/constants/theme/theme'
 
 type AppSelectProps = {
   icon?: ReactNode
@@ -22,8 +22,8 @@ function AppSelect({
         {...props}
         className={`
           form-select
-          hover:[&_.ant-select-selector]:!border-[${dashboardTheme.colors.primary}]
-          focus:[&_.ant-select-selector]:!border-[${dashboardTheme.colors.primary}]
+          hover:[&_.ant-select-selector]:!border-[${theme.colors.primary}]
+          focus:[&_.ant-select-selector]:!border-[${theme.colors.primary}]
           ${className}
         `}
         suffixIcon={

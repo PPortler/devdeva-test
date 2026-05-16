@@ -1,7 +1,7 @@
 import { X } from 'lucide-react'
 import AppInput from '@/components/Form/AppInput/AppInput'
 import AppSelect from '@/components/Form/AppSelect/AppSelect'
-import { dashboardTheme } from '@/constants/dashboard/dashboard-theme'
+import { theme } from '@/constants/theme/theme'
 import AppButton from '@/components/Form/AppButton/AppButton'
 import { PRIORITY_OPTIONS } from '@/constants/options/priority-options'
 import { STATUS_OPTIONS } from '@/constants/options/status-options'
@@ -54,8 +54,8 @@ function SearchFilter({
       {/* Clear Button */}
       <AppButton
         icon={<X size={18} />}
-        backgroundColor={`${dashboardTheme.colors.textPrimary}`}
-        textColor={`${dashboardTheme.colors.textContent}`}
+        backgroundColor={`${theme.colors.textPrimary}`}
+        textColor={`${theme.colors.textContent}`}
         onClick={onClear}
       />
     </div>
