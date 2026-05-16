@@ -3,17 +3,27 @@ import TaskCard from '../TaskCard'
 import { TASK_STATUS_LABEL, type TaskStatus } from '@/types/task/TaskStatus'
 
 type TaskListSectionProps = {
+  bgPrimary?: string
+  bgSecondary?: string
   status: TaskStatus
   tasks: Task[]
 }
 
-function TaskListSection({ status, tasks }: TaskListSectionProps) {
+function TaskListSection({ bgPrimary, bgSecondary, status, tasks }: TaskListSectionProps) {
   const filteredTasks = tasks.filter((task) => task.status === status)
 
   return (
-    <div className="flex-1 bg-[#ddebf9] form-rounded">
+    <div className="flex-1 form-rounded shadow-sm min-w-56"
+      style={{
+        backgroundColor: bgSecondary
+      }}
+    >
       {/* Header */}
-      <div className='bg-[#badcf5] py-1 form-rounded'>
+      <div className='py-1 form-rounded'
+        style={{
+          backgroundColor: bgPrimary,
+        }}
+      >
         <h2
           className="text-lg text-center"
         >

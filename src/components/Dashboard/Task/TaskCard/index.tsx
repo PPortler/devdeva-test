@@ -5,6 +5,7 @@ import { Calendar } from 'lucide-react'
 import Tag from '@/components/UI/Tag/Tag'
 import UserAvatarGroup from '@/components/UI/UserAvatarGroup/UserAvatarGroup'
 import { TASK_PRIORITY_LABEL } from '@/types/task/TaskPriority'
+import { TASK_STATUS_LABEL } from '@/types/task/TaskStatus'
 
 type TaskCardProps = {
   task: Task
@@ -29,13 +30,13 @@ function TaskCard({
       </div>
 
       {/* TAGS & PRIORITY */}
-      <div className="flex gap-2 flex-wrap items-center">
+      <div className="flex gap-1 flex-wrap items-center">
         {task.tags.map((tag) => (
-          <Tag key={tag} label={tag} variant="primary" size="sm" />
+          <Tag key={tag} label={tag} variant="feature" size="sm" />
         ))}
         <Tag
           label={TASK_PRIORITY_LABEL[task.priority]}
-          variant="primary"
+          variant={task.priority}
           size="sm"
         />
       </div>
@@ -46,7 +47,7 @@ function TaskCard({
           <Calendar size={16} />
           <p className="text-sm">{task.dueDate}</p>
         </div>
-        <Tag label={task.status} variant="success" size="sm" />
+        <Tag label={TASK_STATUS_LABEL[task.status]} variant={task.status} size="sm" />
       </div>
 
       {/* PROGRESS & ASSIGNEES */}
@@ -55,7 +56,7 @@ function TaskCard({
           <label className="text-xs font-medium">Progress</label>
           <Progress percent={task.progress} showInfo={false} size="small" />
         </div>
-        {task.assignees.length > 0 && <UserAvatarGroup users={task.assignees} size={28} />}
+        <UserAvatarGroup users={task.assignees} size={28} />
       </div>
     </div>
   )

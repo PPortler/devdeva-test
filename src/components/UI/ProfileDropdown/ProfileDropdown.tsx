@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 
 import { Avatar, Button, Dropdown } from 'antd'
+import { theme } from '@/constants/theme/theme'
 
 // Mock profile menu items
 const profileMenuItems = [
@@ -73,8 +74,10 @@ function ProfileDropdown() {
         {/* AVATAR */}
         <Avatar
           size={30}
+          style={{
+            backgroundColor: theme.colors.defaultAvatarColor,
+          }}
           className="
-            !bg-[#67697d]
             !text-sm
           "
         >

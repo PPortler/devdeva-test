@@ -2,16 +2,32 @@ import { theme } from '@/constants/theme/theme'
 
 type TagProps = {
   label: string
-  variant?: 'default' | 'primary' | 'success' | 'warning' | 'error'
+  variant?: 'default' | 'todo' | 'feature' | 'low' | 'medium' | 'high' | 'doing' | 'done' | 'all'
   size?: 'sm' | 'md' | 'lg'
 }
 
 const variantColors = {
-  default: theme.colors.borderSidebar,
-  primary: theme.colors.primary,
-  success: '#10b981',
-  warning: '#f59e0b',
-  error: '#ef4444',
+  default: theme.colors.primary,
+  todo: theme.colors.todoTag,
+  feature: theme.colors.featureTag,
+  low: theme.colors.lowPriorityTag,
+  medium: theme.colors.mediumPriorityTag,
+  high: theme.colors.highPriorityTag,
+  doing: theme.colors.doingTag,
+  done: theme.colors.doneTag,
+  all: theme.colors.primary,
+}
+
+const variantTextColors = {
+  default: theme.colors.textPrimary,
+  todo: theme.colors.todoTagText,
+  feature: theme.colors.featureTagText,
+  low: theme.colors.lowPriorityTagText,
+  medium: theme.colors.mediumPriorityTagText,
+  high: theme.colors.highPriorityTagText,
+  doing: theme.colors.doingTagText,
+  done: theme.colors.doneTagText,
+  all: theme.colors.textPrimary,
 }
 
 const sizeClasses = {
@@ -23,10 +39,10 @@ const sizeClasses = {
 function Tag({ label, variant = 'default', size = 'md' }: TagProps) {
   return (
     <span
-      className={`rounded-full font-medium flex items-center w-fit ${sizeClasses[size]}`}
+      className={`rounded-full font-medium flex items-center w-fit ${sizeClasses[size]} px-2`}
       style={{
         backgroundColor: variantColors[variant],
-        color: variant === 'default' ? theme.colors.textSecondary : theme.colors.textPrimary,
+        color: variantTextColors[variant],
       }}
     >
       {label}
