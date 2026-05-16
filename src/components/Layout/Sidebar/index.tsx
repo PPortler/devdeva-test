@@ -6,7 +6,7 @@ import {
 import { Button, Layout, Menu } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
 import devdevaLogo from '@/assets/images/devdeva_logo.png'
-import { dashboardMenuItems } from '@/constants/task-dashboard/dashboard-menu'
+import { dashboardMenuItems } from '@/constants/dashboard/dashboard-menu'
 import { theme } from '@/constants/theme/theme'
 
 const { Sider } = Layout
