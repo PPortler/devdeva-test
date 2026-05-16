@@ -8,8 +8,10 @@ import type { TaskStatus } from "@/types/task/TaskStatus"
 import type { TaskPriority } from "@/types/task/TaskPriority"
 import AppPagination from "@/components/UI/AppPagination/AppPagination"
 import useDebounce from "@/hooks/useDebounce"
+import useDashboardStore from "@/stores/dashboard/useDashboardStore"
 
 function DashboardPage() {
+  // state
   const [page, setPage] = useState(1)
   const [limit] = useState(6)
   const [totalPage, setTotalPage] = useState(0)
@@ -18,13 +20,22 @@ function DashboardPage() {
   const [priority, setPriority] = useState<TaskPriority>()
   const [search, setSearch] = useState('')
 
+  // store
+  const { searchHeader } = useDashboardStore()
+
+  // hooks
   const debouncedSearch = useDebounce({
     value: search,
   })
+  const debouncedHeaderSearch = useDebounce({
+    value: searchHeader,
+  })
 
+  // load initial data
   const { isLoadingInitialData, tasks } = useLoadInitialData({
     page,
     limit,
+    searchHeader: debouncedHeaderSearch,
     search: debouncedSearch,
     status,
     priority,
@@ -53,6 +64,7 @@ function DashboardPage() {
       <div className="mt-5">
         <SearchFilter
           search={search}
+          placeholder="Search name task or description"
           onSearchChange={setSearch}
           onClear={handleClear}
           selectedStatus={status}

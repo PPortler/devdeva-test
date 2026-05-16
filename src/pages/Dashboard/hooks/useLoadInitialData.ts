@@ -9,6 +9,7 @@ import { useMockData } from './useMockData'
 type Params = {
     page: number
     limit: number
+    searchHeader: string
     search: string
     status: TaskStatus | undefined
     priority: TaskPriority | undefined
@@ -19,6 +20,7 @@ type Params = {
 export const useLoadInitialData = ({
     page,
     limit,
+    searchHeader,
     search,
     status,
     priority,
@@ -38,6 +40,7 @@ export const useLoadInitialData = ({
         const response = await getTasksData({
             page,
             limit,
+            searchHeader,
             search,
             status,
             priority,
@@ -68,7 +71,7 @@ export const useLoadInitialData = ({
     // Load initial data on component mount
     useEffect(() => {
         loadInitialData();
-    }, [page, search, status, priority]);
+    }, [page, search, searchHeader, status, priority]);
 
     return {
         isLoadingInitialData,

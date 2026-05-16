@@ -1,7 +1,7 @@
 // TODO: ลบไฟล์นี้เมื่อ integrate API จริงแล้ว
 import type { Task } from '@/types/task/Task'
-import { TASK_STATUS } from '@/types/task/TaskStatus'
-import { TASK_PRIORITY } from '@/types/task/TaskPriority'
+import { TASK_STATUS, TASK_STATUS_LABEL } from '@/types/task/TaskStatus'
+import { TASK_PRIORITY, TASK_PRIORITY_LABEL } from '@/types/task/TaskPriority'
 
 const MOCK_TASKS: Task[] = [
   {
@@ -125,6 +125,7 @@ type GetTasksParams = {
   page: number
   limit: number
   search?: string
+  searchHeader?: string
   status?: string
   priority?: string
 }
@@ -135,6 +136,7 @@ export const useMockData = () => {
       page = 1,
       limit = 10,
       search = '',
+      searchHeader = '',
       status,
       priority,
     } = params
@@ -142,16 +144,30 @@ export const useMockData = () => {
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 500))
 
-    // Filter by search
+    // Filter by search (หาชื่อ task หรือ description)
     let filteredTasks = [...MOCK_TASKS]
     if (search) {
       const searchLower = search.toLowerCase()
       filteredTasks = filteredTasks.filter(
         (task) =>
           task.title.toLowerCase().includes(searchLower) ||
-          task.description?.toLowerCase().includes(searchLower) ||
-          task.tags.some((tag) => tag.toLowerCase().includes(searchLower))
+          task.description?.toLowerCase().includes(searchLower)
       )
+    }
+
+    // Filter by searchHeader (หาชื่อ task หรือ priority หรือ status)
+    if (searchHeader) {
+      const searchHeaderLower = searchHeader.toLowerCase()
+      filteredTasks = filteredTasks.filter((task) => {
+        const taskTitle = task.title.toLowerCase().includes(searchHeaderLower)
+        const taskPriority = TASK_PRIORITY_LABEL[task.priority]
+          .toLowerCase()
+          .includes(searchHeaderLower)
+        const taskStatus = TASK_STATUS_LABEL[task.status]
+          .toLowerCase()
+          .includes(searchHeaderLower)
+        return taskTitle || taskPriority || taskStatus
+      })
     }
 
     // Filter by status

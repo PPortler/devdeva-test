@@ -10,6 +10,7 @@ import type { TaskPriority } from '@/types/task/TaskPriority'
 
 type SearchFilterProps = {
   search: string
+  placeholder?: string
   onSearchChange: (value: string) => void
   onClear: () => void
   selectedStatus?: TaskStatus
@@ -20,6 +21,7 @@ type SearchFilterProps = {
 
 function SearchFilter({
   search,
+  placeholder = "Search",
   onSearchChange,
   onClear,
   selectedStatus,
@@ -30,7 +32,7 @@ function SearchFilter({
   return (
     <div className="flex gap-2 items-end flex-wrap">
       <AppInput
-        placeholder="Search"
+        placeholder={placeholder}
         icon={undefined}
         value={search}
         onChange={(e) => onSearchChange(e.target.value)}

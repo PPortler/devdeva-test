@@ -39,6 +39,7 @@ function AppPagination({
       >
         Showing {tasksLength} of {totalCount} tasks (Page {current}/{totalPage})
       </div>
+
       <Pagination
         current={current}
         total={total}
@@ -46,11 +47,8 @@ function AppPagination({
         onChange={onChange}
         showSizeChanger={false}
         className={`
-          [&_.ant-pagination-item]:!rounded-lg
-          [&_.ant-pagination-item]:!border-zinc-300
-          [&_.ant-pagination-item-active]:!border-[${theme.colors.primary}]
-          [&_.ant-pagination-item-active]:!bg-[${theme.colors.primary}]
-          [&_.ant-pagination-item-active_a]:!text-[${theme.colors.textPrimary}]
+          [&_.ant-pagination-item]:!form-rounded
+          [&_.ant-pagination-item]:!border-[${theme.colors.primary}]
         `}
       />
     </div>

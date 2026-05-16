@@ -1,12 +1,13 @@
-import { useState } from 'react'
 import AppInput from '@/components/Form/AppInput/AppInput'
 import { theme } from '@/constants/theme/theme'
 import { Search } from 'lucide-react'
 import NotificationButton from '@/components/UI/NotificationButton/NotificationButton'
 import ProfileDropdown from '@/components/UI/ProfileDropdown/ProfileDropdown'
+import useDashboardStore from '@/stores/dashboard/useDashboardStore'
 
 function Header() {
-  const [search, setSearch] = useState('')
+  const { searchHeader, setSearchHeader } =
+    useDashboardStore()
 
   return (
     <header
@@ -35,15 +36,15 @@ function Header() {
         {/* RIGHT */}
         <div className='flex items-center gap-3'>
           <AppInput
-            placeholder="Search"
+            placeholder="Search tasks or priority or status"
             icon={Search}
-            value={search}
+            value={searchHeader}
             onChange={(e) =>
-              setSearch(e.target.value)
+              setSearchHeader(e.target.value)
             }
-            containerClassName='w-56'
+            containerClassName='w-96'
           />
-          <NotificationButton/>
+          <NotificationButton />
           <ProfileDropdown />
         </div>
       </div>

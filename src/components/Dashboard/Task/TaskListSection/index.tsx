@@ -62,7 +62,7 @@ function TaskListSection({
                   key={index}
                   className="
                     h-45
-                    rounded-2xl
+                    form-rounded
                     p-4
                     shadow-sm
                   "
@@ -93,7 +93,7 @@ function TaskListSection({
           ))
         ) : (
           <div
-            className="p-3 rounded-lg flex flex-col gap-3 h-40 font-normal justify-center items-center"
+            className="p-3 form-rounded flex flex-col gap-3 h-40 font-normal justify-center items-center"
             style={{
               backgroundColor: theme.colors.header,
               border: `1px solid ${theme.colors.borderSidebar}`,
