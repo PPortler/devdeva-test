@@ -98,7 +98,10 @@ export const useLoadInitialData = ({
 
     // Load initial data on component mount
     useEffect(() => {
-        loadInitialData();
+        (async () => {
+            await loadInitialData()
+        })()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, search, searchHeader, status, priority]);
 
     return {

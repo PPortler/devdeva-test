@@ -30,7 +30,7 @@ function AppButton({
       className={`
         form-button
         ${fullWidth ? '!w-full' : ''}
-        ${className}
+        ${className} 
         ${disabled ? 'cursor-not-allowed opacity-50' : 'hover:opacity-95'}
       `}
       style={{
