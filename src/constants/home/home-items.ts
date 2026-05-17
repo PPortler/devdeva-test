@@ -8,14 +8,14 @@ export const homeItems: HomeItem[] = [
   {
     title: 'Task Dashboard',
     description:
-      'Manage tasks, monitor progress, track priorities, and organize team workflows efficiently.',
+      'A modern task workspace for organizing work, tracking progress, and managing priorities in real time.',
     icon: LayoutDashboard,
     href: '/dashboard',
   },
   {
     title: 'Daily Graph',
     description:
-      'Visualize hourly analytics with interactive multi-axis charts, filters, tooltips, and PDF export.',
+      'Interactive data visualization system with multi-axis charts, filtering tools, tooltips, and PDF export.',
     icon: ChartSpline,
     href: '/graph',
   },

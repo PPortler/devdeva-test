@@ -15,19 +15,17 @@ function HeroSection() {
       {/* Title */}
       <div className="mt-7 max-w-3xl text-center">
         <h1 className="text-5xl font-black leading-tight tracking-tight md:text-7xl">
-          Build Modern
+          Build & Experiment
           <span className="bg-gradient-to-r from-[#ff4d4f] to-[#c01820] bg-clip-text text-transparent">
             {' '}
-            Dashboard
+            Frontend
           </span>
           <br />
-          Experiences
+          Systems
         </h1>
 
         <p className="mt-6 text-lg leading-relaxed text-zinc-400 md:text-xl">
-          Interactive task management and data visualization
-          system built with React, TypeScript, Tailwind CSS,
-          and modern frontend architecture.
+          A frontend testing environment for building dashboards, analytics systems, and interactive UI components using React, TypeScript, and modern web technologies.
         </p>
       </div>
     </>
