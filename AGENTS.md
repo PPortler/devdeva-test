@@ -1,54 +1,46 @@
 # AGENTS.md
 
-## 📋 Project Overview
-โปรเจกต์เป็นเว็บสำหรับการทำแบบทดสอบ (Testing) Frontend ของบริษัท Devdeva
-- **Tech Stack**: React, TypeScript, Tailwind CSS, Ant Design, Vite
-- **Main Pages**: Dashboard (task management), Graph (data visualization), Home, MyTasks, Settings, Team
-- **Purpose**: Task management interface with dashboard and analytics
+## Project Overview
+เว็บสำหรับการทดสอบ แบ่งเป็น 2 Task:
+- Dashboard (Task Management)
+- Graph (Chart + PDF Export)
 
-## 🚀 Commands
+**Tech Stack**
+React 18 • TypeScript • Tailwind CSS • Ant Design • Vite • Zustand • Recharts • html2canvas • jsPDF
+
+**Main Pages**
+Dashboard • Graph • Home
+
+---
+
+## Commands
+
 ```bash
-npm install          # ติดตั้ง dependencies
-npm run dev          # เริ่ม development server
-npm run lint         # ตรวจสอบ code style
-npm run build        # build สำหรับ production
+npm install      # install dependencies
+npm run dev      # run dev server (http://localhost:5173)
+npm run build    # build production
+npm run lint     # run ESLint
+npm run preview  # preview production build
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
-├── assets/           # รูปภาพและไฟล์ static
-├── components/       # Reusable components
-│   ├── Dashboard/    # Dashboard-specific components
-│   │   └── hooks/    # Dashboard-specific hooks
-│   ├── Form/         # Form inputs (AppButton, AppInput, AppSelect)
-│   ├── Home/         # Home page components
-│   ├── Layout/       # Layout wrappers (Header, Sidebar)
-│   ├── SearchFilter/ # Search and filter components
-│   └── UI/           # Generic UI components
-├── constants/        # ค่าคงที่และ configuration
-│   ├── home/         # Home page constants
-│   ├── options/      # Select options (status, priority)
-│   ├── dashboard/ # Dashboard menu config
-│   └── theme/        # Color theme
-├── hooks/            # Global custom hooks
-│   └── ...
-├── pages/            # Page components (Route pages)
-│   ├── Dashboard/    # Dashboard page
-│   │   └── hooks/    # Dashboard-specific hooks
-│   ├── Graph/        # Graph/Analytics page
-│   ├── Home/         # Home page
-│   ├── MyTasks/      # My Tasks page
-│   ├── Settings/     # Settings page
-│   └── Team/         # Team page
-├── routers/          # Route definitions
-├── types/            # TypeScript type definitions
-│   ├── home/         # Home-related types
-│   ├── task/         # Task-related types
-│   └── user/         # User-related types
-├── utils/            # Helper/Utility functions
-└── App.tsx, main.tsx, index.css
+├── assets/        # static files
+├── components/    # reusable components
+├── constants/     # configs & constants
+├── hooks/         # global hooks
+├── pages/         # route pages
+├── routers/       # route config
+├── stores/        # Zustand store
+│   ├── app/
+│   └── dashboard/
+├── types/         # TypeScript types
+├── utils/         # helper functions
+├── App.tsx
+├── main.tsx
+└── index.css
 ```
 
 ## 📝 Code Style & Naming Conventions
@@ -57,25 +49,30 @@ src/
 - ✅ **ใช้ TypeScript ทั้งหมด** - ไม่มี `.js` files
 - ✅ **Import `type` keyword** สำหรับ type definitions: `import type { Task } from '@/types/task/Task'`
 - ✅ **Props interface naming**: `{ComponentName}Props`
+- ✅ **ใช้ path aliases** `@/` สำหรับ imports
+- ✅ **Export types** from type files แล้ว import ที่อื่น
 - ❌ **ไม่ใช้ `any` type**
+- ❌ **ไม่ hardcode values** - ใช้ constants จาก `/constants`
 
 ### Naming Conventions
 
 #### Components
-- **PascalCase** สำหรับชื่อ components: `MyButton`, `TaskCard`, `UserProfile`
-- **Folder structure**: ใช้ PascalCase ด้วย `components/TaskCard/index.tsx`
+- **PascalCase** สำหรับชื่อ components: `TaskCard`, `LineCharts`, `ThemeDropdown`
+- **Folder structure**: ใช้ PascalCase `components/TaskCard/index.tsx`
 - **Main export**: ใช้ `index.tsx` แล้ว export component default
 
 #### Functions & Variables
-- **camelCase** สำหรับ functions: `handleClick()`, `calculateTotal()`
-- **camelCase** สำหรับ variables: `userName`, `taskList`
-- **UPPER_SNAKE_CASE** สำหรับ constants: `TASK_STATUS`, `API_KEY`
+- **camelCase** สำหรับ functions: `handleSubmit()`, `calculateTotal()`
+- **camelCase** สำหรับ variables: `userData`, `chartData`, `isLoading`
+- **UPPER_SNAKE_CASE** สำหรับ constants: `TASK_STATUS`, `CHART_CONFIG`, `INITIAL_FORM`
 
 #### Files & Folders
 - **Components**: PascalCase `MyComponent/index.tsx`
-- **Hooks**: camelCase `useTaskList.ts`
-- **Utils/Constants**: camelCase `theme.ts`, `dashboard-menu.tsx`
-- **Types**: PascalCase `Task.ts`, `TaskStatus.ts`
+- **Hooks**: camelCase `useTaskFilter.ts`, `useMockData.ts`, `useLoadInitialData.ts`
+- **Utils**: camelCase `exportChartToPDF.ts`, `formatDate.ts`
+- **Types**: PascalCase `Task.ts`, `ChartData.ts`
+- **Stores**: camelCase `themeStore.ts`, `dashboardStore.ts`
+- **Config**: camelCase `chart-config.ts`, `dashboard-menu.tsx`
 
 ### Component Structure
 
@@ -86,14 +83,10 @@ interface ComponentNameProps {
   // Props definition
 }
 
-/**
- * Brief description of component
- * @param props - The component props
- */
 function ComponentName({ prop1, prop2 }: ComponentNameProps) {
   return (
     <div>
-      {/* Component JSX */}
+      {/* Component TSX */}
     </div>
   )
 }
@@ -102,56 +95,35 @@ export default ComponentName
 ```
 
 ### Styling
-- ✅ **Tailwind CSS** สำหรับ styling หลัก
-- ✅ **Ant Design** สำหรับ complex components
+- ✅ **Tailwind CSS** สำหรับ styling หลัก (responsive design, utilities)
+- ✅ **Inline styles** สำหรับ dynamic values หรือ export compatibility (PDF, charts)
+- ✅ **Ant Design** สำหรับ complex components (Modal, Dropdown, Input, etc.)
 - ✅ **Theme constants** จาก `src/constants/theme/theme.ts`
-- ❌ ไม่ใช้ inline styles มากเกินไป
-- ❌ **ห้าม hardcode colors** - ใช้ theme constants แทน
+- ❌ ไม่ใช้ CSS modules
+- ❌ ห้าม hardcode colors - ใช้ theme constants แทน
 
 Example:
 ```tsx
-// ✅ Good
-import { theme } from '@/constants/theme/theme'
-
-<div style={{ color: theme.colors.textPrimary }}>
+// ✅ Good - Inline styles for dynamic values
+const { colors } = useThemeStore().theme
+<div style={{ color: colors.textPrimary }}>
   Content
 </div>
 
-// ❌ Avoid
-<div style={{ 
-  display: 'flex', 
-  gap: '16px',
-  color: '#1f69d7',  // Hardcode color
-  backgroundColor: '#ffffff'  // Hardcode color
-}}>
+// ✅ Good - Tailwind for static styles
+<button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg">
+  Click me
+</button>
+
+// ❌ Avoid - Hardcoded colors
+<div style={{ color: '#1f69d7' }}>
 ```
-
-### Logic Organization
-- **ไม่ใช้ large logic ในเดียว component** - แยกออกเป็น hooks หรือ util functions
-- **Custom hooks** สำหรับ state logic: `useTaskFilter.ts`, `usePagination.ts`
-- **Utils** สำหรับ helper functions: `utils/formatDate.ts`
-
-## 📌 Type Definitions
-
-ใช้ path alias `@/` เมื่อ import:
-```tsx
-// ✅ Good
-import type { Task } from '@/types/task/Task'
-import { TaskCard } from '@/components/Dashboard/Task/TaskCard'
-
-// ❌ Avoid
-import type { Task } from '../../../types/task/Task'
-```
-
-### Common Types Location
-- `types/task/` - Task, TaskStatus, TaskPriority
-- `types/user/` - User information
-- `types/home/` - Home page types
 
 ## 🎣 Hooks Guidelines
 
-- ใช้ `use` prefix: `usePagination`, `useTaskFilter`
-- ก็ว่าใน `pages/{PageName}/hooks/` หรือ `components/{ComponentName}/hooks/`
+### Custom Hooks
+- ใช้ `use` prefix: `usePagination`, `useTaskFilter`, `useLoadInitialData`
+- ไว้ใน `pages/{PageName}/hooks/` หรือ `components/{ComponentName}/hooks/` ตามความเหมาะสม
 - Return object ควรมี TypeScript interface
 
 ```tsx
@@ -166,48 +138,188 @@ function useTasks(): UseTasksReturn {
 }
 ```
 
-## ✅ Testing and Validation
+### Page-Specific Hooks Pattern
+- **useLoadInitialData**: โหลดข้อมูลเบื้องต้นจาก API/Mock (Dashboard, Graph)
+- **useMockData**: Return mock API functions (getTasksData, getUsersData, getChartData, etc.)
+
+### Global Hooks (in /hooks)
+- **useThemeStore**: Theme state management (light/deva)
+- **useDashboardStore**: Dashboard state (search, filters)
+- **useDebounce**: Debounce input values for search/filter
+
+## 🔄 State Management (Zustand)
+
+### useThemeStore
+```tsx
+import { useThemeStore } from '@/stores/app/themeStore'
+
+const { themeKey, setTheme, theme } = useThemeStore()
+// theme.colors = { primary, textPrimary, sidebar, etc. }
+```
+
+### useDashboardStore
+```tsx
+import useDashboardStore from '@/stores/dashboard/useDashboardStore'
+
+const { searchHeader, setSearchHeader } = useDashboardStore()
+```
+
+## 📊 Chart Component Pattern
+
+LineCharts component รับ `data` prop แล้ว render multi-axis chart:
+
+```tsx
+import LineCharts from '@/components/Charts/LineCharts/LineCharts'
+import type { LineChartData } from '@/types/chart/ChartData'
+
+<LineCharts data={chartData} />
+```
+
+### Chart Data Flow
+1. **Graph Page** → `useLoadInitialData()` hook
+2. Hook → `useMockData().getChartData()` 
+3. Mock data → State (`chartData`)
+4. State → Pass to `<LineCharts data={chartData} />`
+
+### Chart Config
+Chart configuration อยู่ใน [src/components/Charts/LineCharts/chart-config.ts](src/components/Charts/LineCharts/chart-config.ts):
+- Color definition สำหรับแต่ละ series
+- Gradient IDs
+- Y-axis domains
+- Labels
+
+## 📄 Export to PDF
+
+Chart export to PDF ด้วย `html2canvas` + `jsPDF`:
+
+```tsx
+import { exportChartToPDF } from '@/utils/exportChartToPDF'
+
+const result = await exportChartToPDF({
+  element: chartRef.current,
+  fileName: 'daily-graph.pdf'
+})
+```
+
+**Features:**
+- Scale 3x สำหรับ high quality rendering
+- White background
+- Landscape orientation
+- Auto layout calculation
+- Optimized for element cloning
+
+## ✅ Testing & Validation
 
 ก่อนส่งงานต้องตรวจสอบให้ผ่าน:
+
 ```bash
-npm run lint              # TypeScript + ESLint
-npm run build             # Build success
+npm run build             # Build success (must pass)
+npm run lint              # ESLint check (warnings ok)
 # ตรวจสอบจาก browser dev tools ว่าไม่มี console errors
 ```
 
 **Required:**
-- ❌ ไม่มี TypeScript errors
-- ❌ ไม่มี ESLint warnings
-- ❌ ไม่มี console errors
+- ✅ `npm run build` ผ่าน (no TypeScript errors)
 - ✅ Component render ถูกต้อง
+- ✅ ไม่มี critical console errors
+
+**Optional (warnings allowed):**
+- ESLint warnings (Tailwind format, style tips)
+- TypeScript deprecation warnings (already handled)
 
 ## 🚫 Boundaries & Rules
 
-- ❌ **ห้ามลบไฟล์สำคัญ** โดยไม่แจ้งก่อน (tsconfig, vite.config, package.json)
-- ❌ **ห้าม modify types** ที่มีความสำคัญ โดยไม่คิดถึง impact
-- ❌ **ห้าม hardcode values** ใช้ constants/config แทน
-- ❌ **ห้าม hardcode colors** ใช้ theme constants จาก `src/constants/theme/theme.ts` แทน
-- ⚠️ ถ้าไม่แน่ใจ ให้ถาม หรือ propose plan ก่อนทำการแก้ไข
-- ✅ **ทำการบันทึก progress** ก่อนทำการ major changes
+- ❌ **ห้ามลบไฟล์สำคัญ** - tsconfig, vite.config, package.json
+- ❌ **ห้าม modify shared types** โดยไม่คิดถึง impact ต่อ components อื่น
+- ❌ **ห้าม hardcode values** - ใช้ constants แทน
+- ❌ **ห้าม hardcode colors** - ใช้ theme constants จาก `src/constants/theme/theme.ts`
+- ❌ **ห้าม break existing features** - ตรวจสอบ UI ก่อน submit
+- ⚠️ ถ้าไม่แน่ใจ - ถาม หรือ propose plan ก่อนทำการแก้ไข
+- ✅ **ทำการบันทึก progress** - update AGENTS.md หลังจากทำ major changes
 
-## 📝 Important Changes & Updates
+## 📝 Important Components & Features
 
-**การแก้ไขที่สำคัญต้องอัปเดต AGENTS.md:**
-- เพิ่ม/ลบ folder หรือ file structure
-- เปลี่ยน naming conventions
-- เพิ่ม global hooks หรือ utils
-- เปลี่ยนแปลง styling approach
-- เพิ่ม technology stack ใหม่
-- ปรับแก้ code style guidelines
+### Recently Added (May 2026)
+- **ThemeDropdown** - Theme selector component ด้วยวงกลมสี (Light blue #1f69d7, Deva red #c01820)
+- **LineCharts** - Multi-axis chart component ด้วย Recharts (green, orange, blue series)
+- **exportChartToPDF** - Export chart to PDF ด้วย html2canvas + jsPDF
+- **useLoadInitialData** (Graph page) - Load chart data with mock API pattern
+- **themeStore** - Global theme state management (Zustand)
+- **useMockData** (Graph page) - Mock chart data API
 
-⚠️ **หลังจากแก้ไขเสร็จ ต้องอัปเดต AGENTS.md เพื่อให้เอกสารอยู่ในสภาพปัจจุบันเสมอ**
+### Core Features
+- ✅ Task management (create, edit, delete, filter)
+- ✅ Task status grouping (Todo, Doing, Done)
+- ✅ Task priority filtering (Low, Medium, High)
+- ✅ Search & debounce functionality
+- ✅ Real-time analytics dashboard
+- ✅ Multi-axis chart visualization
+- ✅ PDF export functionality
+- ✅ Theme switching (Light/Deva)
+- ✅ Responsive design
+- ✅ User avatar & profile dropdown
+- ✅ Notification system (UI ready)
 
 ## 🎯 Best Practices
 
-1. **ใช้ composition over inheritance** - React components
-2. **Keep components small** - ใหญ่ไม่เกิน 200 lines
+1. **ใช้ composition over inheritance** - React functional components
+2. **Keep components small** - ใหญ่ไม่เกิน 250 lines (ถ้ามากกว่านี้ให้แยกออก)
 3. **Extract repeated logic** - ไปไว้ใน hooks หรือ utils
-4. **Use constants** - แทนที่ magic numbers
+4. **Use constants** - แทนที่ magic numbers/strings/colors
 5. **Error handling** - implement try-catch สำหรับ async operations
-6. **Accessibility** - ใช้ semantic HTML, proper ARIA labels
-7. **Performance** - use `memo`, `useMemo`, `useCallback` เมื่อจำเป็น
+6. **Loading states** - ให้ user feedback ระหว่าง data loading
+7. **Type safety** - export types จาก type files, หลีกเลี่ยง `any`
+8. **Accessibility** - ใช้ semantic HTML, ARIA labels สำหรับ complex components
+9. **Performance** - use `memo`, `useMemo`, `useCallback` เมื่อจำเป็น
+10. **Code organization** - Related code ไว้เดียวกัน (component + types + hooks)
+
+## 🔗 Dependencies
+
+**Core Libraries:**
+- `react` 18 - UI framework
+- `typescript` - Type safety
+- `tailwindcss` - Styling
+- `antd` (Ant Design) - Component library
+- `zustand` - State management (lightweight alternative to Redux)
+- `react-router-dom` - Routing
+- `recharts` - Chart library (multi-axis support)
+- `html2canvas` - HTML to image conversion
+- `jspdf` - PDF generation
+- `lucide-react` - Icon library
+- `dayjs` - Date/time manipulation
+
+## 📌 Type Definitions Location
+
+ใช้ path alias `@/` เมื่อ import:
+```tsx
+// ✅ Good
+import type { Task } from '@/types/task/Task'
+import type { LineChartData } from '@/types/chart/ChartData'
+import { TaskCard } from '@/components/Dashboard/Task/TaskCard'
+import { useThemeStore } from '@/stores/app/themeStore'
+
+// ❌ Avoid
+import type { Task } from '../../../types/task/Task'
+import { TaskCard } from '../../../components/...'
+```
+
+## 📁 Key Files Reference
+
+- **Configuration**: `tsconfig.json`, `vite.config.ts`, `tailwind.config.ts`
+- **Theme Colors**: `src/constants/theme/theme.ts`
+- **Dashboard Config**: `src/constants/dashboard/dashboard-menu.tsx`
+- **Task Types**: `src/types/task/Task.ts`, `TaskStatus.ts`, `TaskPriority.ts`
+- **Chart Config**: `src/components/Charts/LineCharts/chart-config.ts`
+
+## 📝 Documentation Updates
+
+**ต้องอัปเดต AGENTS.md เมื่อ:**
+- ✅ เพิ่ม/ลบ folder หรือ file structure ใหญ่
+- ✅ เปลี่ยน naming conventions พื้นฐาน
+- ✅ เพิ่ม global hooks, stores, หรือ utils
+- ✅ เปลี่ยน styling approach (CSS-in-JS, CSS modules, etc.)
+- ✅ เพิ่ม dependency ใหม่ที่สำคัญ
+- ✅ เปลี่ยน code patterns หรือ best practices
+- ✅ เพิ่มหรือลบ page ใหญ่
+
+⚠️ **หลังจากแก้ไขเสร็จ ต้องอัปเดต AGENTS.md เพื่อให้เอกสารอยู่ในสภาพปัจจุบันเสมอ**
