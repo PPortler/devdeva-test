@@ -7,11 +7,13 @@ import { Button, Layout, Menu } from 'antd'
 import { useNavigate, useLocation } from 'react-router-dom'
 import devdevaLogo from '@/assets/images/devdeva_logo.png'
 import { dashboardMenuItems } from '@/constants/dashboard/dashboard-menu'
-import { theme } from '@/constants/theme/theme'
+import { useThemeStore } from '@/stores/app/themeStore'
 
 const { Sider } = Layout
 
 function SideBar() {
+  const { theme } = useThemeStore()
+
   const [collapsed, setCollapsed] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()

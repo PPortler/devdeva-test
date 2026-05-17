@@ -5,7 +5,7 @@ import {
   type TaskStatus,
 } from '@/types/task/TaskStatus'
 import TaskCard from '../TaskCard'
-import { theme } from '@/constants/theme/theme'
+import { useThemeStore } from '@/stores/app/themeStore'
 
 type TaskListSectionProps = {
   bgPrimary?: string
@@ -24,6 +24,8 @@ function TaskListSection({
   isLoading = false,
   onEditTask,
 }: TaskListSectionProps) {
+  const { theme } = useThemeStore()
+
   const filteredTasks = tasks.filter(
     (task) => task.status === status,
   )

@@ -17,10 +17,10 @@ import type { Task } from '@/types/task/Task'
 import type { TaskPriority } from '@/types/task/TaskPriority'
 import type { TaskStatus } from '@/types/task/TaskStatus'
 import type { User } from '@/types/user/User'
-import { theme } from '@/constants/theme/theme'
 import TextArea from 'antd/es/input/TextArea'
 import { useMockData } from '@/pages/Dashboard/hooks/useMockData'
 import AppLabel from '@/components/Form/AppLabel/AppLabel'
+import { useThemeStore } from '@/stores/app/themeStore'
 
 const INITIAL_FORM = {
   title: '',
@@ -52,6 +52,9 @@ function TaskModal({
 }: TaskModalProps) {
   const [form, setForm] = useState(INITIAL_FORM)
   const [loading, setLoading] = useState(false)
+
+   const { theme } = useThemeStore()
+  
   const { addTask, updateTask } = useMockData()
 
   useEffect(() => {

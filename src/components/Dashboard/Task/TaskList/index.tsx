@@ -1,5 +1,5 @@
 import TaskListSection from '@/components/Dashboard/Task/TaskListSection'
-import { theme } from '@/constants/theme/theme'
+import { useThemeStore } from '@/stores/app/themeStore'
 import type { Task } from '@/types/task/Task'
 import { TASK_STATUS } from '@/types/task/TaskStatus'
 
@@ -10,6 +10,8 @@ type TaskListProps = {
 }
 
 function TaskList({ tasks = [], isLoading, onEditTask }: TaskListProps) {
+  const { theme } = useThemeStore()
+
   return (
     <div className="flex gap-4 flex-wrap">
       <TaskListSection isLoading={isLoading} bgPrimary={theme.colors.todoPrimary} bgSecondary={theme.colors.todoSecondary} status={TASK_STATUS.TODO} tasks={tasks} onEditTask={onEditTask} />

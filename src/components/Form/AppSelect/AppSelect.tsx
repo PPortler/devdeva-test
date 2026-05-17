@@ -1,7 +1,7 @@
 import { Select } from 'antd'
 import type { SelectProps } from 'antd'
 import type { ReactNode } from 'react'
-import { theme } from '@/constants/theme/theme'
+import { useThemeStore } from '@/stores/app/themeStore'
 
 type AppSelectProps = {
   icon?: ReactNode
@@ -14,6 +14,7 @@ function AppSelect({
   className = '',
   ...props
 }: AppSelectProps) {
+  const { theme } = useThemeStore()
 
   return (
     <div className={`flex flex-col ${containerClassName}`}>

@@ -1,7 +1,7 @@
+import { useThemeStore } from '@/stores/app/themeStore'
 import type { ButtonProps } from 'antd'
 import { Button } from 'antd'
 import type { ReactNode } from 'react'
-import { theme } from '@/constants/theme/theme'
 
 type AppButtonProps = {
   icon?: ReactNode
@@ -23,6 +23,8 @@ function AppButton({
   disabled,
   ...props
 }: AppButtonProps) {
+  const { theme } = useThemeStore()
+
   return (
     <Button
       {...props}

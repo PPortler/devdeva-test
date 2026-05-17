@@ -63,11 +63,10 @@ function ProfileDropdown() {
           !flex
           !h-12
           !items-center
-          !gap-2
+          !gap-1
           !rounded-2xl
           !bg-transparent
-          !px-0
-          hover:!bg-transparent
+          !px-0       
         "
       >
         {/* AVATAR */}

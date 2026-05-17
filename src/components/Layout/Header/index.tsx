@@ -1,11 +1,14 @@
 import AppInput from '@/components/Form/AppInput/AppInput'
-import { theme } from '@/constants/theme/theme'
 import { Search } from 'lucide-react'
 import NotificationButton from '@/components/UI/NotificationButton/NotificationButton'
 import ProfileDropdown from '@/components/UI/ProfileDropdown/ProfileDropdown'
 import useDashboardStore from '@/stores/dashboard/useDashboardStore'
+import { useThemeStore } from '@/stores/app/themeStore'
+import ThemeDropdown from '@/components/UI/ThemeDropdown/ThemeDropdown'
 
 function Header() {
+  const { theme } = useThemeStore()
+
   const { searchHeader, setSearchHeader } =
     useDashboardStore()
 
@@ -45,6 +48,7 @@ function Header() {
             containerClassName='w-96'
           />
           <NotificationButton />
+          <ThemeDropdown />
           <ProfileDropdown />
         </div>
       </div>

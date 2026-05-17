@@ -1,7 +1,7 @@
 import type { InputProps } from 'antd'
 import { Input } from 'antd'
 import type { LucideIcon } from 'lucide-react'
-import { theme } from '@/constants/theme/theme'
+import { useThemeStore } from '@/stores/app/themeStore'
 
 type AppInputProps = {
   icon?: LucideIcon
@@ -16,6 +16,7 @@ function AppInput({
   containerClassName = '',
   ...props
 }: AppInputProps) {
+  const { theme } = useThemeStore()
 
   return (
     <div

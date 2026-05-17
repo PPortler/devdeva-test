@@ -1,4 +1,4 @@
-import { theme } from '@/constants/theme/theme'
+import { useThemeStore } from '@/stores/app/themeStore'
 import { Pagination } from 'antd'
 
 type AppPaginationProps = {
@@ -23,6 +23,8 @@ function AppPagination({
   totalCount,
   onChange,
 }: AppPaginationProps) {
+  const { theme } = useThemeStore()
+
   return (
     <div
       className="
@@ -33,9 +35,9 @@ function AppPagination({
       "
     >
       <div className="text-sm"
-      style={{
-        color: theme.colors.textSecondary
-      }}
+        style={{
+          color: theme.colors.textSecondary
+        }}
       >
         Showing {tasksLength} of {totalCount} tasks (Page {current}/{totalPage})
       </div>

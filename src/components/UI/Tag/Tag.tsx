@@ -1,33 +1,9 @@
-import { theme } from '@/constants/theme/theme'
+import { useThemeStore } from "@/stores/app/themeStore"
 
 type TagProps = {
   label: string
   variant?: 'default' | 'todo' | 'feature' | 'low' | 'medium' | 'high' | 'doing' | 'done' | 'all'
   size?: 'sm' | 'md' | 'lg'
-}
-
-const variantColors = {
-  default: theme.colors.primary,
-  todo: theme.colors.todoTag,
-  feature: theme.colors.featureTag,
-  low: theme.colors.lowPriorityTag,
-  medium: theme.colors.mediumPriorityTag,
-  high: theme.colors.highPriorityTag,
-  doing: theme.colors.doingTag,
-  done: theme.colors.doneTag,
-  all: theme.colors.primary,
-}
-
-const variantTextColors = {
-  default: theme.colors.textPrimary,
-  todo: theme.colors.todoTagText,
-  feature: theme.colors.featureTagText,
-  low: theme.colors.lowPriorityTagText,
-  medium: theme.colors.mediumPriorityTagText,
-  high: theme.colors.highPriorityTagText,
-  doing: theme.colors.doingTagText,
-  done: theme.colors.doneTagText,
-  all: theme.colors.textPrimary,
 }
 
 const sizeClasses = {
@@ -37,6 +13,32 @@ const sizeClasses = {
 }
 
 function Tag({ label, variant = 'default', size = 'md' }: TagProps) {
+  const { theme } = useThemeStore()
+
+  const variantColors = {
+    default: theme.colors.primary,
+    todo: theme.colors.todoTag,
+    feature: theme.colors.featureTag,
+    low: theme.colors.lowPriorityTag,
+    medium: theme.colors.mediumPriorityTag,
+    high: theme.colors.highPriorityTag,
+    doing: theme.colors.doingTag,
+    done: theme.colors.doneTag,
+    all: theme.colors.primary,
+  }
+
+  const variantTextColors = {
+    default: theme.colors.textPrimary,
+    todo: theme.colors.todoTagText,
+    feature: theme.colors.featureTagText,
+    low: theme.colors.lowPriorityTagText,
+    medium: theme.colors.mediumPriorityTagText,
+    high: theme.colors.highPriorityTagText,
+    doing: theme.colors.doingTagText,
+    done: theme.colors.doneTagText,
+    all: theme.colors.textPrimary,
+  }
+
   return (
     <span
       className={`rounded-full font-medium flex items-center w-fit ${sizeClasses[size]} px-2`}

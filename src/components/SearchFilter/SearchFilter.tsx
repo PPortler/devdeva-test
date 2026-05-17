@@ -1,12 +1,12 @@
 import { X } from 'lucide-react'
 import AppInput from '@/components/Form/AppInput/AppInput'
 import AppSelect from '@/components/Form/AppSelect/AppSelect'
-import { theme } from '@/constants/theme/theme'
 import AppButton from '@/components/Form/AppButton/AppButton'
 import { PRIORITY_OPTIONS } from '@/constants/options/priority-options'
 import { STATUS_OPTIONS } from '@/constants/options/status-options'
 import type { TaskStatus } from '@/types/task/TaskStatus'
 import type { TaskPriority } from '@/types/task/TaskPriority'
+import { useThemeStore } from '@/stores/app/themeStore'
 
 type SearchFilterProps = {
   search: string
@@ -29,6 +29,8 @@ function SearchFilter({
   selectedPriority,
   onPriorityChange,
 }: SearchFilterProps) {
+  const { theme } = useThemeStore()
+
   return (
     <div className="flex gap-2 items-end flex-wrap">
       <AppInput

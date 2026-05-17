@@ -1,4 +1,3 @@
-import { theme } from '@/constants/theme/theme'
 import type { Task } from '@/types/task/Task'
 import { Progress } from 'antd'
 import { Calendar } from 'lucide-react'
@@ -6,6 +5,7 @@ import Tag from '@/components/UI/Tag/Tag'
 import UserAvatarGroup from '@/components/UI/UserAvatarGroup/UserAvatarGroup'
 import { TASK_PRIORITY_LABEL } from '@/types/task/TaskPriority'
 import { TASK_STATUS_LABEL } from '@/types/task/TaskStatus'
+import { useThemeStore } from '@/stores/app/themeStore'
 
 type TaskCardProps = {
   task: Task
@@ -16,6 +16,7 @@ function TaskCard({
   task,
   onEdit,
 }: TaskCardProps) {
+  const { theme } = useThemeStore()
 
   return (
     <div
