@@ -72,7 +72,9 @@ function SideBar() {
               w-8
               rounded-sm
               object-cover
+              cursor-pointer
             "
+            onClick={() => navigate('/')}
           />
 
           {!collapsed && (

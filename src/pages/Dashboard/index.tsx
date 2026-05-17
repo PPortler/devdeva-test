@@ -10,6 +10,7 @@ import AppPagination from "@/components/UI/AppPagination/AppPagination"
 import useDebounce from "@/hooks/useDebounce"
 import useDashboardStore from "@/stores/dashboard/useDashboardStore"
 import TaskModal from "@/components/Dashboard/Task/TaskModal/TaskModal"
+import type { Task } from "@/types/task/Task"
 
 function DashboardPage() {
   // state
@@ -21,6 +22,13 @@ function DashboardPage() {
   const [priority, setPriority] = useState<TaskPriority>()
   const [search, setSearch] = useState('')
   const [openTaskModal, setOpenTaskModal] = useState(false)
+  const [taskModalState, setTaskModalState] = useState<{
+    mode: 'create' | 'edit'
+    initialData?: Partial<Task>
+  }>({
+    mode: 'create',
+    initialData: undefined,
+  })
 
   // store
   const { searchHeader } = useDashboardStore()
@@ -34,7 +42,7 @@ function DashboardPage() {
   })
 
   // load initial data
-  const { isLoadingInitialData, tasks, users } = useLoadInitialData({
+  const { isLoadingInitialData, tasks, users, reloadTasks } = useLoadInitialData({
     page,
     limit,
     searchHeader: debouncedHeaderSearch,
@@ -60,9 +68,13 @@ function DashboardPage() {
         <AppButton
           icon={<Plus size={18} />}
           disabled={isLoadingInitialData}
-          onClick={() =>
+          onClick={() => {
+            setTaskModalState({
+              mode: 'create',
+              initialData: undefined,
+            })
             setOpenTaskModal(true)
-          }
+          }}
         >
           Create Task
         </AppButton>
@@ -84,7 +96,17 @@ function DashboardPage() {
 
       {/* Task List */}
       <div className="mt-5">
-        <TaskList tasks={tasks} isLoading={isLoadingInitialData} />
+        <TaskList
+          tasks={tasks}
+          isLoading={isLoadingInitialData}
+          onEditTask={(task) => {
+            setTaskModalState({
+              mode: 'edit',
+              initialData: task,
+            })
+            setOpenTaskModal(true)
+          }}
+        />
       </div>
 
       {/* Pagination */}
@@ -103,15 +125,19 @@ function DashboardPage() {
       {/* Task Modal */}
       <TaskModal
         open={openTaskModal}
-        onClose={() =>
+        onClose={() => {
           setOpenTaskModal(false)
-        }
-        assignees={users}
-        onSubmit={(data) => {
-          // TODO: เรียก API สำหรับสร้าง task
-          console.log('Submit task:', data)
-          setOpenTaskModal(false)
+          setTaskModalState({
+            mode: 'create',
+            initialData: undefined,
+          })
         }}
+        assignees={users}
+        onSuccess={() => {
+          reloadTasks()
+        }}
+        mode={taskModalState.mode}
+        initialData={taskModalState.initialData}
       />
     </div>
   )

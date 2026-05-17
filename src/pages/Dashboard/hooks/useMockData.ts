@@ -276,6 +276,20 @@ type GetUsersResponse = {
   message?: string
 }
 
+// Add Task API
+type AddTaskResponse = {
+  ok: boolean
+  data?: Task
+  message?: string
+}
+
+// Update Task API
+type UpdateTaskResponse = {
+  ok: boolean
+  data?: Task
+  message?: string
+}
+
 export const useMockData = () => {
   const getTasksData = async (params: GetTasksParams): Promise<GetTasksResponse> => {
     const {
@@ -358,8 +372,68 @@ export const useMockData = () => {
     }
   }
 
+  // สำหรับจำลองการ add เข้า task
+  const addTask = async (taskData: Omit<Task, 'id'>): Promise<AddTaskResponse> => {
+
+    // Simulate API delay
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    try {
+      // Generate new ID from highest existing ID
+      const newId = (Math.max(...MOCK_TASKS.map((t) => parseInt(t.id)), 0) + 1).toString()
+      const newTask: Task = {
+        ...taskData,
+        id: newId,
+      }
+      MOCK_TASKS.push(newTask)
+      return {
+        ok: true,
+        data: newTask,
+        message: 'Task added successfully',
+      }
+    } catch (error) {
+      return {
+        ok: false,
+        message: error instanceof Error ? error.message : 'Failed to add task',
+      }
+    }
+  }
+
+  // สำหรับจำลองการ update เข้า task
+  const updateTask = async (
+    taskId: string,
+    taskData: Partial<Omit<Task, 'id'>>
+  ): Promise<UpdateTaskResponse> => {
+
+    // Simulate API delay
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    
+    try {
+      const taskIndex = MOCK_TASKS.findIndex((t) => t.id === taskId)
+      if (taskIndex === -1) {
+        return {
+          ok: false,
+          message: 'Task not found',
+        }
+      }
+      MOCK_TASKS[taskIndex] = { ...MOCK_TASKS[taskIndex], ...taskData }
+      return {
+        ok: true,
+        data: MOCK_TASKS[taskIndex],
+        message: 'Task updated successfully',
+      }
+    } catch (error) {
+      return {
+        ok: false,
+        message: error instanceof Error ? error.message : 'Failed to update task',
+      }
+    }
+  }
+
   return {
     getTasksData,
     getUsersData,
+    addTask,
+    updateTask,
   }
 }

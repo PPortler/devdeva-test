@@ -3,6 +3,8 @@ import {
   Avatar,
   DatePicker,
   Modal,
+  Slider,
+  message,
 } from 'antd'
 import dayjs from 'dayjs'
 
@@ -16,64 +18,137 @@ import type { TaskPriority } from '@/types/task/TaskPriority'
 import type { TaskStatus } from '@/types/task/TaskStatus'
 import type { User } from '@/types/user/User'
 import { theme } from '@/constants/theme/theme'
+import TextArea from 'antd/es/input/TextArea'
+import { useMockData } from '@/pages/Dashboard/hooks/useMockData'
+import AppLabel from '@/components/Form/AppLabel/AppLabel'
 
 const INITIAL_FORM = {
   title: '',
   description: '',
   tags: [] as string[],
   status: 'todo' as TaskStatus,
-  priority: 'medium' as TaskPriority,
+  priority: 'low' as TaskPriority,
   assignees: [] as string[],
   dueDate: null as dayjs.Dayjs | null,
+  progress: 0,
 }
 
 type TaskModalProps = {
   open: boolean
-  mode?: 'create' | 'edit'
+  mode?: 'create' | 'edit' | 'null'
   onClose: () => void
-  onSubmit?: (data: typeof INITIAL_FORM) => void
   assignees: User[]
+  onSuccess: () => void
   initialData?: Partial<Task>
 }
 
 function TaskModal({
   open,
-  mode = 'create',
+  mode = 'null',
   onClose,
-  onSubmit,
   assignees,
+  onSuccess,
   initialData,
 }: TaskModalProps) {
   const [form, setForm] = useState(INITIAL_FORM)
+  const [loading, setLoading] = useState(false)
+  const { addTask, updateTask } = useMockData()
 
   useEffect(() => {
-    if (open && initialData) {
-      // แก้ไข task ที่มีอยู่
-      setForm({
-        title: initialData.title || '',
-        description: initialData.description || '',
-        tags: initialData.tags || [],
-        status: (initialData.status as TaskStatus) || 'todo',
-        priority: (initialData.priority as TaskPriority) || 'medium',
-        assignees: initialData.assignees?.map((u) => u.id) || [],
-        dueDate: initialData.dueDate
-          ? dayjs(initialData.dueDate)
-          : null,
-      })
-    } else if (!open) {
-      // รีเซ็ตฟอร์มเมื่อปิด
+    if (!open) {
       setForm(INITIAL_FORM)
-    }
-  }, [open, initialData])
-
-  const handleSubmit = () => {
-    // TODO: เพิ่ม validation
-    if (!form.title.trim()) {
-      alert('Please enter task title')
       return
     }
 
-    onSubmit?.(form)
+    if (mode === 'edit' && initialData) {
+      setForm({
+        title: initialData.title || '',
+        description:
+          initialData.description || '',
+        tags: initialData.tags || [],
+        status:
+          initialData.status || 'todo',
+        priority:
+          initialData.priority ||
+          'medium',
+        assignees:
+          initialData.assignees?.map(
+            (u) => u.id
+          ) || [],
+        dueDate: initialData.dueDate
+          ? dayjs(initialData.dueDate)
+          : null,
+        progress: initialData.progress || 0,
+      })
+    }
+  }, [open, mode, initialData])
+
+  const handleSubmit = async () => {
+    // Validation
+    if (!form.title.trim()) {
+      message.error('Please enter task title')
+      return
+    }
+
+    if (form.tags.length === 0) {
+      message.error('Please add at least one tag')
+      return
+    }
+
+    if (form.assignees.length === 0) {
+      message.error('Please select at least one assignee')
+      return
+    }
+
+    const selectedAssignees = assignees.filter((user) =>
+      form.assignees.includes(user.id)
+    )
+
+    setLoading(true)
+
+    // Payload
+    const taskPayload = {
+      title: form.title,
+      description: form.description,
+      tags: form.tags,
+      status: form.status,
+      priority: form.priority,
+      assignees: selectedAssignees,
+      dueDate: form.dueDate?.format('MMM DD') || '',
+      progress: form.progress || 0,
+    }
+
+    // Create
+    if (mode === 'create') {
+      const response = await addTask(taskPayload as Omit<Task, 'id'>)
+
+      if (!response.ok) {
+        message.error(response.message || 'Failed to create task')
+        setLoading(false)
+        return
+      }
+
+      message.success('Task created successfully')
+    }
+
+    // Update
+    if (mode === 'edit' && initialData?.id) {
+      const response = await updateTask(
+        initialData.id,
+        taskPayload as Partial<Omit<Task, 'id'>>
+      )
+      if (!response.ok) {
+        message.error(response.message || 'Failed to update task')
+        setLoading(false)
+        return
+      }
+
+      message.success('Task updated successfully')
+    }
+
+    onSuccess()
+    handleClose()
+    setLoading(false)
   }
 
   const handleClose = () => {
@@ -99,10 +174,7 @@ function TaskModal({
       <div className="mt-5 flex flex-col gap-4">
         {/* TITLE */}
         <div>
-          <label className="mb-2 block text-sm font-medium">
-            Task Title *
-          </label>
-
+          <AppLabel label="Task Title" isRequire={true} />
           <AppInput
             placeholder="Enter task title"
             value={form.title}
@@ -114,11 +186,8 @@ function TaskModal({
 
         {/* DESCRIPTION */}
         <div>
-          <label className="mb-2 block text-sm font-medium">
-            Description
-          </label>
-
-          <textarea
+          <AppLabel label="Task Description" isRequire={true} />
+          <TextArea
             placeholder="Enter task description"
             value={form.description}
             onChange={(e) =>
@@ -126,25 +195,14 @@ function TaskModal({
             }
             rows={4}
             className="
-              w-full
-              rounded-lg
-              border
-              border-zinc-200
-              p-3
-              outline-none
-              transition-all
-
-              focus:border-blue-500
+              form-textarea
             "
           />
         </div>
 
         {/* TAGS */}
         <div>
-          <label className="mb-2 block text-sm font-medium">
-            Tags
-          </label>
-
+          <AppLabel label="Tags" isRequire={true} />
           <AppSelect
             mode="tags"
             placeholder="Add tags"
@@ -158,10 +216,7 @@ function TaskModal({
         {/* STATUS & PRIORITY */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="mb-2 block text-sm font-medium">
-              Status
-            </label>
-
+            <AppLabel label="Status" isRequire={true} />
             <AppSelect
               value={form.status}
               onChange={(value) =>
@@ -175,10 +230,7 @@ function TaskModal({
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">
-              Priority
-            </label>
-
+            <AppLabel label="Priority" isRequire={true} />
             <AppSelect
               value={form.priority}
               onChange={(value) =>
@@ -192,14 +244,44 @@ function TaskModal({
           </div>
         </div>
 
+        {/* PROGRESS */}
+        <div>
+          <div className="flex items-center justify-between">
+            <AppLabel
+              label="Progress"
+              isRequire={true}
+            />
+            <span
+              className="text-sm font-medium"
+              style={{
+                color: theme.colors.primary,
+              }}
+            >
+              {form.progress}%
+            </span>
+          </div>
+          <Slider
+            min={0}
+            max={100}
+            value={form.progress}
+            onChange={(value) =>
+              setForm({
+                ...form,
+                progress: value,
+              })
+            }
+            tooltip={{
+              formatter: (value) =>
+                `${value}%`,
+            }}
+          />
+        </div>
+
         {/* DUE DATE */}
         <div>
-          <label className="mb-2 block text-sm font-medium">
-            Due Date
-          </label>
-
+          <AppLabel label="Due Date" isRequire={true} />
           <DatePicker
-            className="!h-10 !w-full"
+            className="form-input w-full"
             value={form.dueDate}
             onChange={(date) =>
               setForm({ ...form, dueDate: date })
@@ -209,10 +291,7 @@ function TaskModal({
 
         {/* ASSIGNEES */}
         <div>
-          <label className="mb-2 block text-sm font-medium">
-            Assignees
-          </label>
-
+          <AppLabel label="Assignees" isRequire={true} />
           <AppSelect
             mode="multiple"
             value={form.assignees}
@@ -244,12 +323,14 @@ function TaskModal({
           <AppButton
             onClick={handleClose}
             backgroundColor={theme.colors.textSecondary}
+            disabled={loading}
           >
             Cancel
           </AppButton>
 
           <AppButton
             onClick={handleSubmit}
+            loading={loading}
           >
             {mode === 'create'
               ? 'Create Task'

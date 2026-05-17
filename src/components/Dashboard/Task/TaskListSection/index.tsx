@@ -13,6 +13,7 @@ type TaskListSectionProps = {
   status: TaskStatus
   tasks: Task[]
   isLoading?: boolean
+  onEditTask?: (task: Task) => void
 }
 
 function TaskListSection({
@@ -21,6 +22,7 @@ function TaskListSection({
   status,
   tasks,
   isLoading = false,
+  onEditTask,
 }: TaskListSectionProps) {
   const filteredTasks = tasks.filter(
     (task) => task.status === status,
@@ -89,6 +91,7 @@ function TaskListSection({
             <TaskCard
               key={task.id}
               task={task}
+              onEdit={onEditTask}
             />
           ))
         ) : (

@@ -9,19 +9,22 @@ import { TASK_STATUS_LABEL } from '@/types/task/TaskStatus'
 
 type TaskCardProps = {
   task: Task
+  onEdit?: (task: Task) => void
 }
 
 function TaskCard({
   task,
+  onEdit,
 }: TaskCardProps) {
 
   return (
     <div
-      className="p-3 rounded-lg flex flex-col gap-3 font-normal"
+      className="p-3 rounded-lg flex flex-col gap-3 font-normal cursor-pointer"
       style={{
         backgroundColor: theme.colors.header,
         border: `1px solid ${theme.colors.borderSidebar}`,
       }}
+      onClick={() => onEdit && onEdit(task)}
     >
       {/* TITLE & DESCRIPTION */}
       <div>
