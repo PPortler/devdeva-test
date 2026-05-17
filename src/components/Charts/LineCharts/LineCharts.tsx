@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { CHART_LABELS, type LineChartData } from '@/types/chart/ChartData'
 
 import {
@@ -151,14 +151,8 @@ function LineCharts({ data }: LineChartsProps) {
           {/* LINES */}
           {CHART_CONFIG.map(
             (item) => {
-              if (
-                !visibleLines[item.key]
-              ) {
-                return null
-              }
-
               return (
-                <>
+                <React.Fragment key={item.key}>
                   <Area
                     yAxisId={item.key}
                     type="monotone"
@@ -166,6 +160,7 @@ function LineCharts({ data }: LineChartsProps) {
                     fill={`url(#${item.gradientId})`}
                     stroke="none"
                     tooltipType="none"
+                    hide={!visibleLines[item.key]}
                   />
 
                   <Line
@@ -174,6 +169,7 @@ function LineCharts({ data }: LineChartsProps) {
                     dataKey={item.key}
                     stroke={item.stroke}
                     strokeWidth={3}
+                    hide={!visibleLines[item.key]}
                     dot={{
                       r: 2.5,
                       fill: item.stroke,
@@ -183,7 +179,7 @@ function LineCharts({ data }: LineChartsProps) {
                       r: 6,
                     }}
                   />
-                </>
+                </React.Fragment>
               )
             }
           )}
@@ -238,10 +234,9 @@ function LineCharts({ data }: LineChartsProps) {
                 <span
                   className={`
                     font-light
-                    transition-all
                     ${active
                       ? 'text-black'
-                      : 'text-zinc-500 line-through'
+                      : ''
                     }
                   `}
                 >
