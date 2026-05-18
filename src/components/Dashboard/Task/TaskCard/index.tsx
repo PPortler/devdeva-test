@@ -20,10 +20,9 @@ function TaskCard({
 
   return (
     <div
-      className="p-3 rounded-lg flex flex-col gap-3 font-normal cursor-pointer"
+      className="p-3 rounded-lg flex flex-col gap-3 font-normal cursor-pointer border border-gray-300 shadow-sm"
       style={{
         backgroundColor: theme.colors.header,
-        border: `1px solid ${theme.colors.borderSidebar}`,
       }}
       onClick={() => onEdit && onEdit(task)}
     >

@@ -60,7 +60,7 @@ function SearchFilter({
       {/* Clear Button */}
       <AppButton
         icon={<X size={18} />}
-        backgroundColor={`${theme.colors.textPrimary}`}
+        backgroundColor={`${theme.colors.header}`}
         textColor={`${theme.colors.textContent}`}
         onClick={onClear}
       />

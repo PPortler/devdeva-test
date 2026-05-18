@@ -27,6 +27,9 @@ function AppSelect({
           focus:[&_.ant-select-selector]:!border-[${theme.colors.primary}]
           ${className}
         `}
+        style={{
+          backgroundColor: theme.colors.header
+        }}
         suffixIcon={
           icon ? (
             <div>{icon}</div>

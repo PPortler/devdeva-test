@@ -1,6 +1,6 @@
 type AppLabelProps = {
    label: string,
-   isRequire: boolean
+   isRequire?: boolean
 }
 function AppLabel({ label, isRequire }: AppLabelProps) {
     return (

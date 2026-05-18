@@ -48,7 +48,7 @@ src/
 ### TypeScript & General Rules
 - ✅ **ใช้ TypeScript ทั้งหมด** - ไม่มี `.js` files
 - ✅ **Import `type` keyword** สำหรับ type definitions: `import type { Task } from '@/types/task/Task'`
-- ✅ **Props interface naming**: `{ComponentName}Props`
+- ✅ **Props type naming**: `{ComponentName}Props`
 - ✅ **ใช้ path aliases** `@/` สำหรับ imports
 - ✅ **Export types** from type files แล้ว import ที่อื่น
 - ❌ **ไม่ใช้ `any` type**
@@ -79,7 +79,7 @@ src/
 ```tsx
 import type { ComponentNameProps } from '@/types/...'
 
-interface ComponentNameProps {
+type ComponentNameProps = {
   // Props definition
 }
 
@@ -124,10 +124,10 @@ const { colors } = useThemeStore().theme
 ### Custom Hooks
 - ใช้ `use` prefix: `usePagination`, `useTaskFilter`, `useLoadInitialData`
 - ไว้ใน `pages/{PageName}/hooks/` หรือ `components/{ComponentName}/hooks/` ตามความเหมาะสม
-- Return object ควรมี TypeScript interface
+- Return object ควรมี TypeScript type
 
 ```tsx
-interface UseTasksReturn {
+type UseTasksReturn = {
   tasks: Task[]
   isLoading: boolean
   loadTasks: () => Promise<void>

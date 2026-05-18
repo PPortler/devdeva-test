@@ -46,30 +46,31 @@ export const theme = {
     doneTagText: "#003d00",
 
   },
+  
  deva: {
   // Base
   primary: '#c01820',
   primaryHover: '#a5141b',
   textPrimary: '#ffffff',
-  textContent: '#111111',
+  textContent: '#000000',
   textSecondary: '#71717a',
 
-  header: '#ffffff',
-  background: '#f6f6f7',
+  header: '#FEF4F4',
+  background: '#FCE8E9',
 
   // Sidebar
   sidebar: '#121212',
   borderSidebar: 'rgba(255,255,255,0.08)',
 
   // Task - neutral but warm tone
-  todoPrimary: '#f1e5e6',
-  todoSecondary: '#f9f1f2',
+  todoPrimary: '#8CC0EB',
+  todoSecondary: '#BFDDF0',
 
-  doingPrimary: '#f7d6d8',
-  doingSecondary: '#fcebec',
+  doingPrimary: '#C9CAAC',
+  doingSecondary: '#F6F3EB',
 
-  donePrimary: '#e3f2e8',
-  doneSecondary: '#f0faf3',
+  donePrimary: '#FFB6C1',
+  doneSecondary: '#FFF5F8',
 
   // Tag (soft red-based system)
   featureTag: '#f3e1e2',

@@ -15,7 +15,7 @@ const MOCK_CHART_DATA: LineChartData[] = Array.from(
   })
 )
 
-interface GetChartDataResponse {
+type GetChartDataResponse = {
   ok: boolean
   data: {
     chartData: LineChartData[]

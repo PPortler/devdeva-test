@@ -47,6 +47,9 @@ function AppInput({
           form-input
           ${className}
         `}
+        style={{
+          backgroundColor: theme.colors.header
+        }}
       />
     </div>
   )
