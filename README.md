@@ -11,7 +11,7 @@
 ### 1. 📋 Dashboard
 - แสดงข้อมูล Task
 - Filter / Search / Status management
-- UI แบบ Kanban (Todo / Doing / Done)ฉ
+- UI แบบ Kanban (Todo / Doing / Done)
 
 ### 2. 📈 Graph Page
 - แสดงกราฟ Multi-axis (Recharts)
